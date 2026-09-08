@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Agent Workflow Monitor</title>
+<link rel="stylesheet" href="presentation.css">
+<link rel="stylesheet" href="shell.css">
+<script defer src="data/public_snapshot.js"></script>
+<script defer src="presentation.js"></script>
+<script defer src="geometry.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<main>
+<header class="page-heading"><h1>Agent Workflow Monitor</h1><p>Read-only observability for multi-agent workstreams <span class="replay-badge">PUBLIC REPLAY</span></p></header>
+<nav class="windows" aria-label="Monitor windows"><div role="tablist" id="tabs"></div></nav>
+<p id="safe-error" hidden>Replay unavailable. Public data did not match the approved schema.</p>
+<div id="views"></div>
+</main>
+</body>
+</html>

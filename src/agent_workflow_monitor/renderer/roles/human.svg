@@ -1,0 +1,11 @@
+<svg class="pm-role-svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Project owner - human with laptop"><title>Project owner - human with laptop</title><path d="M24 104c1-23 16-36 40-36s39 13 40 36" fill="#449AE2" stroke="#102641" stroke-width="3"/>
+<path d="M53 64v13l11 9 11-9V64" fill="#E6AF84"/>
+<ellipse cx="64" cy="45" rx="24" ry="28" fill="#F4C5A1" stroke="#102641" stroke-width="3"/>
+<path d="M40 44V35C40 8 85 8 88 34v12c-8-2-12-11-13-17-8 11-23 12-35 15z" fill="#344461"/>
+<path d="M43 44h17m8 0h17M60 46h8" stroke="#102641" stroke-width="3"/>
+<rect x="44" y="42" width="16" height="12" rx="4" fill="none" stroke="#102641" stroke-width="3"/>
+<rect x="68" y="42" width="16" height="12" rx="4" fill="none" stroke="#102641" stroke-width="3"/>
+<path d="M58 62q6 5 12 0" fill="none" stroke="#9E6350" stroke-width="2" stroke-linecap="round"/>
+<rect x="27" y="86" width="74" height="30" rx="5" fill="#B9D1E9" stroke="#102641" stroke-width="3"/>
+<circle cx="64" cy="99" r="5" fill="#E9F5FF"/>
+<path d="M19 115h90l-6 7H25z" fill="#7797B7" stroke="#102641" stroke-width="3"/></svg>

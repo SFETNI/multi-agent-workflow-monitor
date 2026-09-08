@@ -1,0 +1,228 @@
+{
+  "activity": [
+    {
+      "actor_id": "A-01",
+      "age": "8 min ago",
+      "detail": "Stage 2 - R6 - validation package prepared",
+      "preview": "to A-02 - Worker - EXECUTE - validation",
+      "type": "handoff",
+      "workstream": "Workstream-01"
+    },
+    {
+      "actor_id": "A-02",
+      "age": "11 min ago",
+      "detail": "Stage 2 - R6 - bounded review requested",
+      "preview": "to A-04 - Evaluator - HANDOFF - review",
+      "type": "handoff",
+      "workstream": "Workstream-01"
+    },
+    {
+      "actor_id": "A-05",
+      "age": "14 min ago",
+      "detail": "Authorization authenticated - pinning pending",
+      "preview": "to H-01 - WAIT - decision",
+      "type": "decision",
+      "workstream": "Workstream-02"
+    }
+  ],
+  "agents": [
+    {
+      "id": "H-01",
+      "kind": "human",
+      "responsibilities": [
+        "Plan",
+        "Brainstorm",
+        "Decision",
+        "Review"
+      ],
+      "role": "Project owner and architect",
+      "status": "human-action",
+      "working": false,
+      "workstream": null
+    },
+    {
+      "id": "A-01",
+      "kind": "orchestrator",
+      "responsibilities": [],
+      "role": "Orchestrator",
+      "status": "observed",
+      "working": true,
+      "workstream": null
+    },
+    {
+      "id": "A-02",
+      "kind": "worker",
+      "responsibilities": [],
+      "role": "Worker",
+      "status": "observed",
+      "working": true,
+      "workstream": "Workstream-01"
+    },
+    {
+      "id": "A-03",
+      "kind": "worker",
+      "responsibilities": [],
+      "role": "Worker",
+      "status": "waiting",
+      "working": false,
+      "workstream": "Workstream-02"
+    },
+    {
+      "id": "A-04",
+      "kind": "evaluator",
+      "responsibilities": [],
+      "role": "Evaluator",
+      "status": "observed",
+      "working": true,
+      "workstream": "Workstream-01"
+    },
+    {
+      "id": "A-05",
+      "kind": "lead_evaluator",
+      "responsibilities": [],
+      "role": "Lead Evaluator",
+      "status": "waiting",
+      "working": false,
+      "workstream": "Workstream-02"
+    },
+    {
+      "id": "X-01",
+      "kind": "consultant",
+      "responsibilities": [],
+      "role": "External Consultant / Collaborator",
+      "status": "external",
+      "working": false,
+      "workstream": null
+    }
+  ],
+  "disclosure": "Recorded workflow - identities generalized - approved operational measurements retained",
+  "edges": [
+    {
+      "action": null,
+      "active": false,
+      "from": "H-01",
+      "id": "E-01",
+      "kind": "standing",
+      "to": "A-01"
+    },
+    {
+      "action": null,
+      "active": false,
+      "from": "H-01",
+      "id": "E-02",
+      "kind": "consult",
+      "to": "X-01"
+    },
+    {
+      "action": "EXECUTE - validation",
+      "active": true,
+      "from": "A-01",
+      "id": "E-03",
+      "kind": "handoff",
+      "to": "A-02"
+    },
+    {
+      "action": null,
+      "active": false,
+      "from": "A-01",
+      "id": "E-04",
+      "kind": "review",
+      "to": "A-03"
+    },
+    {
+      "action": null,
+      "active": false,
+      "from": "A-01",
+      "id": "E-05",
+      "kind": "standing",
+      "to": "A-04"
+    },
+    {
+      "action": null,
+      "active": false,
+      "from": "A-01",
+      "id": "E-06",
+      "kind": "standing",
+      "to": "A-05"
+    }
+  ],
+  "host": {
+    "cpu_count": "12",
+    "disk_free": "115.9 GB",
+    "gpu_memory": "995 / 8192 MiB",
+    "load_15m": "3.07",
+    "load_1m": "3.08",
+    "load_5m": "3.09",
+    "memory_free": "66.8 GB",
+    "uptime": "345d 21h"
+  },
+  "schema_version": 1,
+  "sessions": [
+    {
+      "agent_id": "A-01",
+      "growth": null,
+      "percent": 46.2,
+      "storage": "Not measured",
+      "treatment": "Illustrative",
+      "unit": "context",
+      "value": "46.2%"
+    },
+    {
+      "agent_id": "A-02",
+      "growth": "+0.1 GiB / 3d",
+      "percent": 46.8,
+      "storage": "0.8 GiB",
+      "treatment": "Measured",
+      "unit": "context",
+      "value": "46.8%"
+    },
+    {
+      "agent_id": "A-03",
+      "growth": null,
+      "percent": null,
+      "storage": "Not measured",
+      "treatment": "Limit ?",
+      "unit": "tokens",
+      "value": "178.8k"
+    },
+    {
+      "agent_id": "A-04",
+      "growth": "+0.2 GiB / 3d",
+      "percent": 63.2,
+      "storage": "1.4 GiB",
+      "treatment": "Configured",
+      "unit": "context",
+      "value": "63.2%"
+    },
+    {
+      "agent_id": "A-05",
+      "growth": null,
+      "percent": 63.4,
+      "storage": "Not measured",
+      "treatment": "Illustrative",
+      "unit": "context",
+      "value": "63.4%"
+    }
+  ],
+  "subtitle": "Read-only observability for multi-agent workstreams",
+  "summary": {
+    "active_agents": 3,
+    "blockers": 0,
+    "freshness": "Recorded 14 min ago",
+    "human_actions": 1,
+    "monitored_agents": 5
+  },
+  "title": "Agent Workflow Monitor",
+  "workstreams": [
+    {
+      "id": "Workstream-01",
+      "record_id": "R-01",
+      "status": "unknown"
+    },
+    {
+      "id": "Workstream-02",
+      "record_id": "R-02",
+      "status": "unknown"
+    }
+  ]
+}

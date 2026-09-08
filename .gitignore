@@ -1,0 +1,13 @@
+.local/
+.env
+*.log
+*.pid
+__pycache__/
+.pytest_cache/
+.streamlit/secrets.toml
+runtime/
+state/
+.venv/
+dist/
+build/
+*.egg-info/

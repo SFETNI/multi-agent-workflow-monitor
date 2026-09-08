@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "application": {
+    "title": "Agent Workflow Monitor",
+    "subtitle": "Read-only observability for multi-agent workstreams",
+    "bind_address": "127.0.0.1",
+    "path_display": "hidden"
+  },
+  "source": {
+    "adapter": "snapshot",
+    "path": "public_snapshot.json"
+  },
+  "freshness_seconds": {
+    "activity": 180,
+    "host": 120
+  },
+  "approved_metrics": [
+    "context_usage",
+    "storage_usage",
+    "host"
+  ],
+  "roles": {
+    "human": {
+      "label": "Project owner and architect",
+      "icon": "human.svg"
+    },
+    "orchestrator": {
+      "label": "Orchestrator",
+      "icon": "orchestrator.svg"
+    },
+    "worker": {
+      "label": "Worker",
+      "icon": "worker.svg"
+    },
+    "evaluator": {
+      "label": "Evaluator",
+      "icon": "evaluator.svg"
+    },
+    "lead_evaluator": {
+      "label": "Lead Evaluator",
+      "icon": "lead-evaluator.svg"
+    },
+    "consultant": {
+      "label": "External Consultant / Collaborator",
+      "icon": "consultant.svg"
+    }
+  }
+}

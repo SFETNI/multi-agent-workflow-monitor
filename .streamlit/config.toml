@@ -1,0 +1,13 @@
+[server]
+address = "127.0.0.1"
+headless = true
+enableCORS = true
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = "none"
+showErrorLinks = false
+toolbarMode = "viewer"

@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "application",
+    "source",
+    "freshness_seconds",
+    "approved_metrics",
+    "roles"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "subtitle",
+        "bind_address",
+        "path_display"
+      ],
+      "properties": {
+        "title": {
+          "const": "Agent Workflow Monitor"
+        },
+        "subtitle": {
+          "const": "Read-only observability for multi-agent workstreams"
+        },
+        "bind_address": {
+          "enum": [
+            "127.0.0.1",
+            "localhost"
+          ]
+        },
+        "path_display": {
+          "enum": [
+            "hidden",
+            "basename",
+            "configured-label"
+          ]
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter",
+        "path"
+      ],
+      "properties": {
+        "adapter": {
+          "const": "snapshot"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "freshness_seconds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activity",
+        "host"
+      ],
+      "properties": {
+        "activity": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "host": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "approved_metrics": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "context_usage",
+          "storage_usage",
+          "host"
+        ]
+      }
+    },
+    "roles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "icon": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+\\.svg$"
+          }
+        }
+      }
+    }
+  }
+}

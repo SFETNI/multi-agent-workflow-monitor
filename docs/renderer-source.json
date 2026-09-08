@@ -1,0 +1,24 @@
+{
+  "source_archive_sha256": "400202c9d47948f0e55648d41c81eeb920769d017e41f7135b3dc2b08366e180",
+  "source_files": {
+    "index.html": "8d9a30e84af67fc110b05fa831f2a9820c0d95018b54243cfc65026744219e72",
+    "app.js": "e59edc1dc93aa4b465a8a04ff13becd42ec421c72ce24d6e8a85074d090b2a2e",
+    "presentation.css": "448f39056cd90157d8e6cc939f3e103ae951465d47f4ab944dae4daf28bd7f75",
+    "shell.css": "ff9325d70f06d89dfe9a29de2cafe8c5125ec8f74665fa8dd7fbb7d480f2b64f",
+    "presentation.js": "61eec39ca85f76734ff574e1688ab501e8a8c671e1f7cb9b6a18a8140fc404cf",
+    "geometry.js": "15089dcb6ef7a1438fa8954080ce62e3fb436756e5659a4691cf480f02183a23"
+  },
+  "unchanged": [
+    "index.html",
+    "presentation.css",
+    "shell.css",
+    "presentation.js",
+    "geometry.js"
+  ],
+  "app_changes": [
+    "stale status support",
+    "per-slot configured icons",
+    "truthful local-versus-replay labels"
+  ],
+  "visual_authority": "accepted public v2 polish"
+}

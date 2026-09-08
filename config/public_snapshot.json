@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "snapshot_kind": "recorded_demo",
+  "generated_at": "2026-01-15T12:15:00Z",
+  "participants": [
+    {
+      "public_id": "H-01",
+      "role": "human",
+      "label": "Project owner and architect",
+      "workstream_ids": [
+        "Workstream-01",
+        "Workstream-02"
+      ],
+      "status": "human_action",
+      "status_basis": "recorded",
+      "last_observed_at": null,
+      "context_usage": {
+        "used": null,
+        "limit": null,
+        "percent": null,
+        "unit": "tokens",
+        "basis": "not_measured"
+      },
+      "storage_usage": {
+        "bytes": null,
+        "delta_bytes": null,
+        "basis": "not_measured"
+      }
+    },
+    {
+      "public_id": "A-01",
+      "role": "orchestrator",
+      "label": "Orchestrator",
+      "workstream_ids": [
+        "Workstream-01",
+        "Workstream-02"
+      ],
+      "status": "observed_active",
+      "status_basis": "observed",
+      "last_observed_at": "2026-01-15T12:14:30Z",
+      "context_usage": {
+        "used": 92400,
+        "limit": 200000,
+        "percent": 46.2,
+        "unit": "context",
+        "basis": "configured",
+        "illustrative": true
+      },
+      "storage_usage": {
+        "bytes": null,
+        "delta_bytes": null,
+        "basis": "not_measured"
+      }
+    },
+    {
+      "public_id": "A-02",
+      "role": "worker",
+      "label": "Worker",
+      "workstream_ids": [
+        "Workstream-01"
+      ],
+      "status": "observed_active",
+      "status_basis": "observed",
+      "last_observed_at": "2026-01-15T12:14:30Z",
+      "context_usage": {
+        "used": 93600,
+        "limit": 200000,
+        "percent": 46.8,
+        "unit": "context",
+        "basis": "measured"
+      },
+      "storage_usage": {
+        "bytes": 858993459,
+        "delta_bytes": 107374182,
+        "basis": "measured"
+      }
+    },
+    {
+      "public_id": "A-03",
+      "role": "worker",
+      "label": "Worker",
+      "workstream_ids": [
+        "Workstream-02"
+      ],
+      "status": "waiting",
+      "status_basis": "recorded",
+      "last_observed_at": null,
+      "context_usage": {
+        "used": 178800,
+        "limit": null,
+        "percent": null,
+        "unit": "tokens",
+        "basis": "unverified"
+      },
+      "storage_usage": {
+        "bytes": null,
+        "delta_bytes": null,
+        "basis": "not_measured"
+      }
+    },
+    {
+      "public_id": "A-04",
+      "role": "evaluator",
+      "label": "Evaluator",
+      "workstream_ids": [
+        "Workstream-01"
+      ],
+      "status": "observed_active",
+      "status_basis": "observed",
+      "last_observed_at": "2026-01-15T12:14:30Z",
+      "context_usage": {
+        "used": 126400,
+        "limit": 200000,
+        "percent": 63.2,
+        "unit": "context",
+        "basis": "configured"
+      },
+      "storage_usage": {
+        "bytes": 1503238554,
+        "delta_bytes": 214748365,
+        "basis": "measured"
+      }
+    },
+    {
+      "public_id": "A-05",
+      "role": "lead_evaluator",
+      "label": "Lead Evaluator",
+      "workstream_ids": [
+        "Workstream-02"
+      ],
+      "status": "waiting",
+      "status_basis": "recorded",
+      "last_observed_at": null,
+      "context_usage": {
+        "used": 126800,
+        "limit": 200000,
+        "percent": 63.4,
+        "unit": "context",
+        "basis": "configured",
+        "illustrative": true
+      },
+      "storage_usage": {
+        "bytes": null,
+        "delta_bytes": null,
+        "basis": "not_measured"
+      }
+    },
+    {
+      "public_id": "X-01",
+      "role": "consultant",
+      "label": "External Consultant / Collaborator",
+      "workstream_ids": [
+        "Workstream-01",
+        "Workstream-02"
+      ],
+      "status": "idle_unknown",
+      "status_basis": "not_measured",
+      "last_observed_at": null,
+      "context_usage": {
+        "used": null,
+        "limit": null,
+        "percent": null,
+        "unit": "tokens",
+        "basis": "not_measured"
+      },
+      "storage_usage": {
+        "bytes": null,
+        "delta_bytes": null,
+        "basis": "not_measured"
+      }
+    }
+  ],
+  "workstreams": [
+    {
+      "public_id": "Workstream-01",
+      "label": "Workstream-01",
+      "status": "idle_unknown",
+      "record_label": "Workstream Record",
+      "participants": [
+        "H-01",
+        "A-01",
+        "A-02",
+        "A-04",
+        "X-01"
+      ]
+    },
+    {
+      "public_id": "Workstream-02",
+      "label": "Workstream-02",
+      "status": "idle_unknown",
+      "record_label": "Workstream Record",
+      "participants": [
+        "H-01",
+        "A-01",
+        "A-03",
+        "A-05",
+        "X-01"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "EV-1",
+      "relative_order": 0,
+      "type": "handoff",
+      "source_public_id": "A-01",
+      "target_public_id": "A-02",
+      "workstream_id": "Workstream-01",
+      "action_label": "EXECUTE - validation",
+      "public_message": "Stage 2 - R6 - validation package prepared",
+      "time_display": "8 min ago",
+      "provenance_class": "recorded"
+    },
+    {
+      "event_id": "EV-2",
+      "relative_order": 1,
+      "type": "handoff",
+      "source_public_id": "A-02",
+      "target_public_id": "A-04",
+      "workstream_id": "Workstream-01",
+      "action_label": "HANDOFF - review",
+      "public_message": "Stage 2 - R6 - bounded review requested",
+      "time_display": "11 min ago",
+      "provenance_class": "recorded"
+    },
+    {
+      "event_id": "EV-3",
+      "relative_order": 2,
+      "type": "human_action",
+      "source_public_id": "A-05",
+      "target_public_id": "H-01",
+      "workstream_id": "Workstream-02",
+      "action_label": "WAIT - decision",
+      "public_message": "Authorization authenticated - pinning pending",
+      "time_display": "14 min ago",
+      "provenance_class": "recorded"
+    }
+  ],
+  "host": {
+    "load_1m": 3.08,
+    "load_5m": 3.09,
+    "load_15m": 3.07,
+    "memory_free_bytes": 66800000000,
+    "disk_free_bytes": 115900000000,
+    "cpu_count": 12,
+    "uptime_seconds": 29883600,
+    "gpu_memory_used_bytes": 1043333120,
+    "gpu_memory_total_bytes": 8589934592,
+    "measurement_status": "measured",
+    "observed_at": "2026-01-15T12:14:30Z"
+  }
+}

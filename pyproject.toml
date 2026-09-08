@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-workflow-monitor"
+version = "0.1.0"
+description = "A local-first operations cockpit for multi-agent workflows"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = [
+  "PyYAML>=6.0,<7",
+  "psutil>=5.9,<8",
+  "streamlit>=1.63,<2",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "Pillow>=10,<13",
+  "pytest>=8,<9",
+  "selenium>=4.20,<5",
+  "jsonschema>=4.23,<5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent_workflow_monitor"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

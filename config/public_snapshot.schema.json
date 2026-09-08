@@ -1,0 +1,659 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "snapshot_kind",
+    "generated_at",
+    "participants",
+    "workstreams",
+    "events",
+    "host"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "snapshot_kind": {
+      "enum": [
+        "recorded_demo",
+        "local_observation"
+      ]
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/participant"
+      }
+    },
+    "workstreams": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/workstream"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "host": {
+      "$ref": "#/$defs/host"
+    }
+  },
+  "$defs": {
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "used",
+        "limit",
+        "unit",
+        "percent",
+        "basis"
+      ],
+      "properties": {
+        "used": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "limit": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "unit": {
+          "enum": [
+            "tokens",
+            "context"
+          ]
+        },
+        "percent": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "basis": {
+          "enum": [
+            "measured",
+            "configured",
+            "unverified",
+            "not_measured"
+          ]
+        },
+        "illustrative": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "not_measured"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "used": {
+                "type": "null"
+              },
+              "limit": {
+                "type": "null"
+              },
+              "percent": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "limit": {
+                "type": "integer"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "used": {
+                "type": "integer"
+              },
+              "percent": {
+                "type": "number"
+              },
+              "basis": {
+                "enum": [
+                  "measured",
+                  "configured"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "percent": {
+                "type": "number"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "used": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "basis": {
+                "enum": [
+                  "measured",
+                  "configured"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bytes",
+        "delta_bytes",
+        "basis"
+      ],
+      "properties": {
+        "bytes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "basis": {
+          "enum": [
+            "measured",
+            "configured",
+            "unverified",
+            "not_measured"
+          ]
+        },
+        "delta_bytes": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "not_measured"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "bytes": {
+                "type": "null"
+              },
+              "delta_bytes": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_id",
+        "role",
+        "label",
+        "workstream_ids",
+        "status",
+        "status_basis",
+        "last_observed_at",
+        "context_usage",
+        "storage_usage"
+      ],
+      "properties": {
+        "public_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "role": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "workstream_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          }
+        },
+        "status": {
+          "enum": [
+            "observed_active",
+            "waiting",
+            "stale",
+            "blocked",
+            "human_action",
+            "idle_unknown"
+          ]
+        },
+        "status_basis": {
+          "enum": [
+            "observed",
+            "recorded",
+            "configured",
+            "not_measured"
+          ]
+        },
+        "last_observed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context_usage": {
+          "$ref": "#/$defs/context"
+        },
+        "storage_usage": {
+          "$ref": "#/$defs/storage"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "observed_active",
+                  "stale"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status_basis": {
+                "const": "observed"
+              },
+              "last_observed_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "blocked",
+                  "human_action"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status_basis": {
+                "const": "recorded"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_id",
+        "label",
+        "status",
+        "record_label",
+        "participants"
+      ],
+      "properties": {
+        "public_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "status": {
+          "enum": [
+            "observed_active",
+            "waiting",
+            "stale",
+            "blocked",
+            "human_action",
+            "idle_unknown"
+          ]
+        },
+        "record_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          }
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "relative_order",
+        "type",
+        "source_public_id",
+        "target_public_id",
+        "workstream_id",
+        "action_label",
+        "public_message",
+        "time_display",
+        "provenance_class"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "relative_order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "type": {
+          "enum": [
+            "handoff",
+            "activity",
+            "review",
+            "human_action",
+            "blocker"
+          ]
+        },
+        "source_public_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "target_public_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "workstream_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "action_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "public_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "time_display": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "provenance_class": {
+          "enum": [
+            "observed",
+            "recorded",
+            "configured",
+            "demo"
+          ]
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "load_1m",
+        "load_5m",
+        "load_15m",
+        "memory_free_bytes",
+        "disk_free_bytes",
+        "cpu_count",
+        "uptime_seconds",
+        "gpu_memory_used_bytes",
+        "gpu_memory_total_bytes",
+        "measurement_status",
+        "observed_at"
+      ],
+      "properties": {
+        "load_1m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "load_5m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "load_15m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "memory_free_bytes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "disk_free_bytes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "cpu_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "uptime_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "gpu_memory_used_bytes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "gpu_memory_total_bytes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "measurement_status": {
+          "enum": [
+            "measured",
+            "stale",
+            "not_measured"
+          ]
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "measurement_status": {
+                "enum": [
+                  "measured",
+                  "stale"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "observed_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "measurement_status": {
+                "const": "not_measured"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "load_1m": {
+                "type": "null"
+              },
+              "load_5m": {
+                "type": "null"
+              },
+              "load_15m": {
+                "type": "null"
+              },
+              "memory_free_bytes": {
+                "type": "null"
+              },
+              "disk_free_bytes": {
+                "type": "null"
+              },
+              "cpu_count": {
+                "type": "null"
+              },
+              "uptime_seconds": {
+                "type": "null"
+              },
+              "gpu_memory_used_bytes": {
+                "type": "null"
+              },
+              "gpu_memory_total_bytes": {
+                "type": "null"
+              },
+              "observed_at": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "snapshot_kind": {
+            "const": "local_observation"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "participants": {
+            "items": {
+              "properties": {
+                "context_usage": {
+                  "properties": {
+                    "illustrative": {
+                      "const": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

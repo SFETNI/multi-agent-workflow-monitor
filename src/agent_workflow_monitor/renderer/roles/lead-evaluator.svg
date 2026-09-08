@@ -1,0 +1,8 @@
+<svg class="pm-role-svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Lead robot - routing and coordination"><title>Lead robot - routing and coordination</title><path d="M64 23v-9" stroke="#BDA5F3" stroke-width="5" stroke-linecap="round"/><circle cx="64" cy="11" r="5" fill="#BDA5F3"/>
+<path d="M30 93Q32 79 46 79h36q14 0 16 14l7 19H23z" fill="#449AE2" stroke="#102641" stroke-width="3"/>
+<rect x="39" y="83" width="50" height="31" rx="11" fill="#E9F5FF"/>
+<rect x="14" y="38" width="16" height="25" rx="8" fill="#BDA5F3" stroke="#102641" stroke-width="3"/><rect x="98" y="38" width="16" height="25" rx="8" fill="#BDA5F3" stroke="#102641" stroke-width="3"/>
+<rect x="24" y="24" width="80" height="53" rx="22" fill="#E9F5FF" stroke="#102641" stroke-width="3"/>
+<rect x="31" y="35" width="66" height="32" rx="13" fill="#0A1730"/>
+<path d="M42 53q6-9 12 0M74 53q6-9 12 0" fill="none" stroke="#BDA5F3" stroke-width="4" stroke-linecap="round"/><rect x="36" y="46" width="24" height="17" rx="6" fill="none" stroke="#BDA5F3" stroke-width="3"/><rect x="68" y="46" width="24" height="17" rx="6" fill="none" stroke="#BDA5F3" stroke-width="3"/><path d="M60 53h8" stroke="#BDA5F3" stroke-width="3"/>
+<path d="M47 101h28M64 88v22M75 101l9-8M75 101l9 8" stroke="#102641" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="101" r="4" fill="#BDA5F3"/><circle cx="64" cy="88" r="4" fill="#BDA5F3"/><circle cx="64" cy="111" r="4" fill="#BDA5F3"/></svg>
