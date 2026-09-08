@@ -1,3 +1,4 @@
+.gitattributes
 .gitignore
 .streamlit/config.toml
 CHANGELOG.md

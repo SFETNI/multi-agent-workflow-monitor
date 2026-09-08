@@ -124,7 +124,7 @@ def audit(root: Path, allowlist_path: Path, *, denylist_path: Path | None = None
             issues.append(("runtime_artifact", relative))
         if path.suffix.lower() in ARCHIVE_SUFFIXES:
             issues.append(("embedded_archive", relative))
-        if path.suffix.lower() in TEXT_SUFFIXES or path.name in {".gitignore", "LICENSE"}:
+        if path.suffix.lower() in TEXT_SUFFIXES or path.name in {".gitignore", ".gitattributes", "LICENSE"}:
             try:
                 text = path.read_text(encoding="utf-8")
             except UnicodeError:
