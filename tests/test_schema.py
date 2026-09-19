@@ -19,7 +19,15 @@ def raw_snapshot():
 
 def test_valid_public_snapshot_is_accepted():
     snapshot = load_snapshot(ROOT / "demo" / "public_snapshot.json")
-    assert snapshot.schema_version == 1 and len(snapshot.participants) == 7
+    assert snapshot.schema_version == 2 and len(snapshot.participants) == 7
+
+
+def test_v01_snapshot_remains_compatible():
+    raw = raw_snapshot()
+    raw["schema_version"] = 1
+    raw.pop("model_usage")
+    raw.pop("workflow_graph")
+    assert parse_snapshot(raw).schema_version == 1
 
 
 @pytest.mark.parametrize("section", ["root", "participant", "workstream", "event", "host"])

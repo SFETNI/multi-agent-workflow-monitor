@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "snapshot_kind": "recorded_demo",
-  "generated_at": "2026-01-15T12:15:00Z",
+  "generated_at": "2026-09-19T12:15:00Z",
   "participants": [
     {
       "public_id": "H-01",
@@ -37,7 +37,7 @@
       ],
       "status": "observed_active",
       "status_basis": "observed",
-      "last_observed_at": "2026-01-15T12:14:30Z",
+      "last_observed_at": "2026-09-19T12:14:30Z",
       "context_usage": {
         "used": 92400,
         "limit": 200000,
@@ -61,7 +61,7 @@
       ],
       "status": "observed_active",
       "status_basis": "observed",
-      "last_observed_at": "2026-01-15T12:14:30Z",
+      "last_observed_at": "2026-09-19T12:14:30Z",
       "context_usage": {
         "used": 93600,
         "limit": 200000,
@@ -107,7 +107,7 @@
       ],
       "status": "observed_active",
       "status_basis": "observed",
-      "last_observed_at": "2026-01-15T12:14:30Z",
+      "last_observed_at": "2026-09-19T12:14:30Z",
       "context_usage": {
         "used": 126400,
         "limit": 200000,
@@ -247,6 +247,472 @@
     "gpu_memory_used_bytes": 1043333120,
     "gpu_memory_total_bytes": 8589934592,
     "measurement_status": "measured",
-    "observed_at": "2026-01-15T12:14:30Z"
+    "observed_at": "2026-09-19T12:14:30Z"
+  },
+  "model_usage": {
+    "schema_version": 1,
+    "windows": {
+      "24h": {
+        "observed_tokens": 220000000,
+        "input_tokens": 15000000,
+        "cached_input_tokens": 196000000,
+        "output_tokens": 9000000,
+        "event_count": 42,
+        "value_low": 103.0,
+        "value_high": 104.7,
+        "valuation_quality": "bounded"
+      },
+      "7d": {
+        "observed_tokens": 1420000000,
+        "input_tokens": 90400000,
+        "cached_input_tokens": 1280000000,
+        "output_tokens": 49600000,
+        "event_count": 286,
+        "value_low": 675.2,
+        "value_high": 687.1,
+        "valuation_quality": "bounded"
+      },
+      "30d": {
+        "observed_tokens": 4200000000,
+        "input_tokens": 273000000,
+        "cached_input_tokens": 3780000000,
+        "output_tokens": 147000000,
+        "event_count": 812,
+        "value_low": 1992.9,
+        "value_high": 2040.2,
+        "valuation_quality": "bounded"
+      }
+    },
+    "tracked_total": {
+      "observed_tokens": 5870000000,
+      "input_tokens": 382000000,
+      "cached_input_tokens": 5270000000,
+      "output_tokens": 218000000,
+      "event_count": 1137,
+      "value_low": 2791.9,
+      "value_high": 2862.9,
+      "valuation_quality": "bounded"
+    },
+    "agents": [
+      {
+        "agent_id": "A-01",
+        "provider": "openai",
+        "model": "gpt-4.1",
+        "tokens_7d": 460000000,
+        "tracked_tokens": 1820000000,
+        "share_percent": 32.4,
+        "valuation_quality": "exact"
+      },
+      {
+        "agent_id": "A-02",
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "tokens_7d": 380000000,
+        "tracked_tokens": 1510000000,
+        "share_percent": 26.8,
+        "valuation_quality": "exact"
+      },
+      {
+        "agent_id": "A-03",
+        "provider": "xai",
+        "model": "grok-4.6",
+        "tokens_7d": 300000000,
+        "tracked_tokens": 1120000000,
+        "share_percent": 21.1,
+        "valuation_quality": "bounded"
+      },
+      {
+        "agent_id": "A-04",
+        "provider": "google",
+        "model": "gemini-3.8-flash",
+        "tokens_7d": 200000000,
+        "tracked_tokens": 920000000,
+        "share_percent": 14.1,
+        "valuation_quality": "exact"
+      },
+      {
+        "agent_id": "A-05",
+        "provider": "moonshot",
+        "model": null,
+        "tokens_7d": 80000000,
+        "tracked_tokens": 500000000,
+        "share_percent": 5.6,
+        "valuation_quality": "unknown"
+      }
+    ],
+    "coverage": {
+      "included_registered_sources": 5,
+      "excluded_unmapped_sessions": 1,
+      "conflicting_events_excluded": 0,
+      "unknown_model_events": 1
+    },
+    "events": [
+      {
+        "schema_version": 1,
+        "event_at_utc": "2026-09-19T12:08:00Z",
+        "agent_id": "A-01",
+        "workstream_id": "Workstream-01",
+        "provider": "openai",
+        "model": "gpt-4.1",
+        "model_source": "adapter",
+        "model_confidence": "exact",
+        "input_tokens": 120000,
+        "cached_input_tokens": 1620000,
+        "cache_write_tokens": null,
+        "cache_write_5m_tokens": null,
+        "cache_write_1h_tokens": null,
+        "output_tokens": 42000,
+        "reasoning_tokens": 9000,
+        "total_tokens": 1782000,
+        "total_semantics": "components_exclusive",
+        "billing_mode": "API_EQUIVALENT",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "pricing_context": {
+          "context_tokens": 100000,
+          "service_tier": "standard",
+          "batch": false,
+          "fast": false,
+          "region": null
+        }
+      },
+      {
+        "schema_version": 1,
+        "event_at_utc": "2026-09-19T12:09:00Z",
+        "agent_id": "A-02",
+        "workstream_id": "Workstream-01",
+        "provider": "anthropic",
+        "model": "claude-sonnet-5",
+        "model_source": "adapter",
+        "model_confidence": "exact",
+        "input_tokens": 80000,
+        "cached_input_tokens": 1100000,
+        "cache_write_tokens": null,
+        "cache_write_5m_tokens": 200000,
+        "cache_write_1h_tokens": null,
+        "output_tokens": 36000,
+        "reasoning_tokens": null,
+        "total_tokens": 1416000,
+        "total_semantics": "components_exclusive",
+        "billing_mode": "API_EQUIVALENT",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "pricing_context": {
+          "context_tokens": 100000,
+          "service_tier": "standard",
+          "batch": false,
+          "fast": false,
+          "region": null
+        }
+      },
+      {
+        "schema_version": 1,
+        "event_at_utc": "2026-09-19T12:10:00Z",
+        "agent_id": "A-03",
+        "workstream_id": "Workstream-02",
+        "provider": "xai",
+        "model": "grok-4.6",
+        "model_source": "adapter",
+        "model_confidence": "exact",
+        "input_tokens": 90000,
+        "cached_input_tokens": 870000,
+        "cache_write_tokens": null,
+        "cache_write_5m_tokens": null,
+        "cache_write_1h_tokens": null,
+        "output_tokens": 31000,
+        "reasoning_tokens": 6000,
+        "total_tokens": null,
+        "total_semantics": "components_exclusive",
+        "billing_mode": "API_EQUIVALENT",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "pricing_context": {
+          "context_tokens": null,
+          "service_tier": "standard",
+          "batch": false,
+          "fast": false,
+          "region": null
+        }
+      },
+      {
+        "schema_version": 1,
+        "event_at_utc": "2026-09-19T12:11:00Z",
+        "agent_id": "A-05",
+        "workstream_id": "Workstream-02",
+        "provider": "moonshot",
+        "model": null,
+        "model_source": "adapter",
+        "model_confidence": "unknown",
+        "input_tokens": 12000,
+        "cached_input_tokens": 98000,
+        "cache_write_tokens": null,
+        "cache_write_5m_tokens": null,
+        "cache_write_1h_tokens": null,
+        "output_tokens": 7000,
+        "reasoning_tokens": null,
+        "total_tokens": 117000,
+        "total_semantics": "components_exclusive",
+        "billing_mode": "UNKNOWN",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "pricing_context": {
+          "context_tokens": 100000,
+          "service_tier": "standard",
+          "batch": false,
+          "fast": false,
+          "region": null
+        }
+      }
+    ]
+  },
+  "workflow_graph": {
+    "schema_version": 1,
+    "manifest": {
+      "schema_version": 1,
+      "workflow_id": "WF-DEMO-01",
+      "label": "Synthetic release workflow",
+      "nodes": [
+        {
+          "node_id": "start",
+          "label": "Start",
+          "kind": "start",
+          "x": 7,
+          "y": 50
+        },
+        {
+          "node_id": "prepare",
+          "label": "Prepare",
+          "kind": "task",
+          "x": 22,
+          "y": 50
+        },
+        {
+          "node_id": "branch_a",
+          "label": "Build branch",
+          "kind": "task",
+          "x": 39,
+          "y": 28
+        },
+        {
+          "node_id": "branch_b",
+          "label": "Review branch",
+          "kind": "task",
+          "x": 39,
+          "y": 72
+        },
+        {
+          "node_id": "evaluate",
+          "label": "Evaluate",
+          "kind": "evaluation",
+          "x": 56,
+          "y": 50
+        },
+        {
+          "node_id": "revise",
+          "label": "Revise once",
+          "kind": "task",
+          "x": 68,
+          "y": 24
+        },
+        {
+          "node_id": "human_gate",
+          "label": "Human approval",
+          "kind": "human_gate",
+          "x": 76,
+          "y": 58
+        },
+        {
+          "node_id": "complete",
+          "label": "Complete",
+          "kind": "end",
+          "x": 93,
+          "y": 58
+        }
+      ],
+      "edges": [
+        {
+          "from": "start",
+          "to": "prepare",
+          "condition": null
+        },
+        {
+          "from": "prepare",
+          "to": "branch_a",
+          "condition": "fan-out"
+        },
+        {
+          "from": "prepare",
+          "to": "branch_b",
+          "condition": "fan-out"
+        },
+        {
+          "from": "branch_a",
+          "to": "evaluate",
+          "condition": "join"
+        },
+        {
+          "from": "branch_b",
+          "to": "evaluate",
+          "condition": "join"
+        },
+        {
+          "from": "evaluate",
+          "to": "revise",
+          "condition": "revise"
+        },
+        {
+          "from": "evaluate",
+          "to": "human_gate",
+          "condition": "accept"
+        },
+        {
+          "from": "revise",
+          "to": "evaluate",
+          "condition": "retry"
+        },
+        {
+          "from": "human_gate",
+          "to": "complete",
+          "condition": "approved"
+        }
+      ]
+    },
+    "events": [
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:13:00Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": null,
+        "event": "graph_started",
+        "attempt": 0,
+        "status": "running",
+        "duration_ms": 0,
+        "route": null,
+        "parent_node_id": null,
+        "checkpointed": false,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:13:05Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "prepare",
+        "event": "node_completed",
+        "attempt": 0,
+        "status": "completed",
+        "duration_ms": 5200,
+        "route": null,
+        "parent_node_id": null,
+        "checkpointed": false,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:13:12Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "branch_a",
+        "event": "node_completed",
+        "attempt": 0,
+        "status": "completed",
+        "duration_ms": 6800,
+        "route": null,
+        "parent_node_id": "prepare",
+        "checkpointed": false,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:13:14Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "branch_b",
+        "event": "node_completed",
+        "attempt": 0,
+        "status": "completed",
+        "duration_ms": 8400,
+        "route": null,
+        "parent_node_id": "prepare",
+        "checkpointed": false,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:13:20Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "evaluate",
+        "event": "route_selected",
+        "attempt": 0,
+        "status": "completed",
+        "duration_ms": 6100,
+        "route": "revise",
+        "parent_node_id": null,
+        "checkpointed": false,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:13:21Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "revise",
+        "event": "retry_scheduled",
+        "attempt": 1,
+        "status": "scheduled",
+        "duration_ms": 0,
+        "route": "retry",
+        "parent_node_id": "evaluate",
+        "checkpointed": true,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:13:45Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "revise",
+        "event": "node_completed",
+        "attempt": 1,
+        "status": "completed",
+        "duration_ms": 23800,
+        "route": null,
+        "parent_node_id": "evaluate",
+        "checkpointed": false,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:14:02Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "evaluate",
+        "event": "route_selected",
+        "attempt": 1,
+        "status": "completed",
+        "duration_ms": 5900,
+        "route": "accept",
+        "parent_node_id": null,
+        "checkpointed": false,
+        "human_action": false
+      },
+      {
+        "schema_version": 1,
+        "at_utc": "2026-09-19T12:14:10Z",
+        "workflow_id": "WF-DEMO-01",
+        "run_id": "RUN-DEMO-01",
+        "node_id": "human_gate",
+        "event": "human_interrupt",
+        "attempt": 0,
+        "status": "paused",
+        "duration_ms": 0,
+        "route": null,
+        "parent_node_id": null,
+        "checkpointed": true,
+        "human_action": false
+      }
+    ]
   }
 }

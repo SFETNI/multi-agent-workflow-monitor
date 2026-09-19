@@ -88,11 +88,21 @@ def project_snapshot(snapshot: PublicSnapshot, config: dict, *, now: datetime | 
     freshness = "Recorded 14 min ago" if recorded else "Local observation"
     if not recorded or host_state != "Measured":
         freshness += f" · Host telemetry: {host_state}"
-    return {"schema_version": 1, "title": config["application"]["title"], "subtitle": config["application"]["subtitle"],
+    result = {"schema_version": snapshot.schema_version, "title": config["application"]["title"], "subtitle": config["application"]["subtitle"],
             "disclosure": "Recorded workflow - identities generalized - approved operational measurements retained" if recorded else "Local observation - read-only - freshness evaluated at render time",
             "summary": {"active_agents": sum(a["working"] for a in agents if a["id"].startswith("A-")), "monitored_agents": 5,
                         "human_actions": sum(a["status"] == "human-action" for a in agents), "blockers": sum(a["status"] == "blocked" for a in agents), "freshness": freshness},
             "agents": agents, "workstreams": workstreams, "edges": edges, "activity": activity, "sessions": sessions, "host": host}
+    if snapshot.model_usage is not None:
+        result["model_usage"] = snapshot.model_usage
+    if snapshot.workflow_graph is not None:
+        from .workflow import derive_run_state
+        result["workflow_graph"] = {
+            "manifest": snapshot.workflow_graph["manifest"],
+            "events": snapshot.workflow_graph["events"],
+            "run": derive_run_state(snapshot.workflow_graph, now=clock),
+        }
+    return result
 
 
 def format_delta(delta: int | None) -> str:

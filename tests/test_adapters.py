@@ -20,7 +20,7 @@ def test_snapshot_adapter_is_read_only(tmp_path):
     source = tmp_path / "snapshot.json"
     source.write_bytes((ROOT / "demo" / "public_snapshot.json").read_bytes())
     before = fingerprint(source); result = SnapshotAdapter(source).read(); after = fingerprint(source)
-    assert before == after and result.schema_version == 1
+    assert before == after and result.schema_version == 2
 
 
 def test_jsonl_adapter_is_read_only(tmp_path):

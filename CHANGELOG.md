@@ -1,9 +1,14 @@
 # Changelog
 
+## 0.2.0
+
+- Added optional PublicSnapshot v2 model-usage and workflow-trace contracts while retaining v0.1 compatibility.
+- Added local append-only usage history, exact effective-dated pricing resolution, valuation-quality semantics, and reviewed official-source registry entries.
+- Corrected public pricing lifecycle boundaries and made unsupported nonzero pricing dimensions resolve to Unknown rather than fail rendering.
+- Added compact Model Usage and API Value presentation with explicit non-billing language.
+- Added a provider-neutral Workflow & Trace window and optional LangGraph exporter example.
+- Added two Agent Skills, validators, fictional fixtures, public media, and expanded privacy/release tests.
+
 ## 0.1.0
 
-- Replaced the simplified demo/runtime with the accepted public v2 renderer.
-- Restricted complete app inputs to normalized `PublicSnapshot` models.
-- Added host-metrics load-average portability so Windows environments use `psutil.getloadavg()` when `os.getloadavg()` is unavailable.
-- Added regression coverage for the load-average fallback and strengthened identity-safety assertions for host metrics.
-- Tightened adapter, rendering, and release checks; finalized v0.1.0 publication metadata (license, security, contributing, changelog).
+- Released the accepted public renderer, strict PublicSnapshot, local adapters, public replay, four Agent Skills, and deterministic privacy-audited archive.

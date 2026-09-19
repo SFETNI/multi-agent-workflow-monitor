@@ -17,3 +17,9 @@ The release audit checks the explicit file allowlist, text and filename leakage 
 The audit does not establish absolute privacy for arbitrary future content, discover every possible secret, or certify third-party dependencies. Visual media still needs human inspection. Audit claims apply only to the exact candidate and archive hashes recorded in the audit packet.
 
 Adding an adapter, changing content, rebuilding media, or changing archive members invalidates the prior receipt and requires a new audit.
+
+## v0.2 usage and workflow boundary
+
+Normalized usage stores token categories and public agent/model labels only. It excludes message content, tool payloads, credentials, account IDs, private session identifiers, and raw request data. Local SQLite history belongs under .local/ and is never allowlisted.
+
+Workflow traces contain public IDs and lifecycle metadata only. Prompt/output/checkpoint content and runtime control actions are prohibited. Bundled fixtures are fictional. Official provider names, model IDs, and pricing-source URLs are intentional public facts.

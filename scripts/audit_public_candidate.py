@@ -14,6 +14,16 @@ RUNTIME_NAMES = {".env", "secrets.toml", ".pytest_cache", "__pycache__", "runtim
 ARCHIVE_SUFFIXES = {".zip", ".tar", ".tgz", ".gz", ".bz2", ".xz", ".7z"}
 HTTP_PREFIX = "http" + "://"
 ALLOWED_URLS = {HTTP_PREFIX + "127.0.0.1:8765/", HTTP_PREFIX + "www.w3.org/2000/svg"}
+ALLOWED_URLS |= {
+    "https://openai.com/index/gpt-4-1/",
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+    "https://platform.claude.com/docs/en/release-notes/overview",
+    "https://docs.x.ai/developers/pricing",
+    "https://x.ai/news/grok-4-6",
+    "https://ai.google.dev/gemini-api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/deprecations",
+}
 
 
 def allowed_url(value: str) -> bool:

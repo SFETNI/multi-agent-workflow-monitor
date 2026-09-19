@@ -1,11 +1,14 @@
 # Architecture
 
-The v0.1 app reads only a complete PublicSnapshot through SnapshotAdapter. Generic JSONL events and host/process metrics utilities return fragments; they are not wired as selectable application inputs. Source-specific optional adapters must produce a full snapshot or contribute to an explicitly implemented, tested composition layer.
+Authorized local metadata flows through read-only adapters into a strict PublicSnapshot. The same deterministic projection drives Streamlit and the offline static replay.
 
-Both static and local rendering call the same public projection in presentation.py. The canonical renderer lives under src/agent_workflow_monitor/renderer. build_demo.py materializes its assets and projected data. The local application embeds those same assets with safely escaped JSON in a minimal Streamlit wrapper. No simplified alternate overview remains.
+The product keeps four layers separate:
 
-The accepted seven-slot, two-workstream geometry is retained. Labels and icons are configurable, while arbitrary geometry/cardinality is deferred. Fixed standing relationships are presentation scaffolding, not evidence of execution. Recent Activity records all normalized events; only qualifying observed activity enables motion or an active edge capsule.
+- Organization: ownership and supervision.
+- Workflow: possible transitions.
+- Execution Trace: observed transitions in one run.
+- Resources: context, model usage, API-equivalent value, storage, and host health.
 
-Approved metrics are excluded before serialization, not hidden with CSS. Source paths, raw payloads, provider formats, and filesystem errors never enter the projection. Runtime exceptions produce one generic UI error. The runner enforces loopback, CORS/XSRF, no error details/links, and no usage statistics.
+Usage events may be retained in a local append-only SQLite ledger under .local/. The runtime database is gitignored and excluded from release archives. Pricing is resolved offline from the bundled effective-dated registry. Workflow rendering consumes generic JSON; LangGraph is only an optional producer example.
 
-The monitor never writes to source records or exposes orchestration/control actions. Source composition and private integrations remain outside the renderer and outside skill resources.
+No monitor component controls an agent or workflow.

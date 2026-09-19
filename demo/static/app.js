@@ -1,7 +1,7 @@
 "use strict";
 (() => {
  const D=window.PUBLIC_SNAPSHOT,P=window.PRESENTATION;
- const names=['Command Center','Agent map','Inspector','Hand-offs and activity','Workstream overview','Sessions and usage','Activity and debugging'];
+ const names=['Command Center','Agent map','Inspector','Hand-offs and activity','Workstream overview','Sessions and usage','Activity and debugging','Workflow & Trace'];
  const allowed={root:['schema_version','title','subtitle','disclosure','summary','agents','workstreams','edges','activity','sessions','host'],summary:['active_agents','monitored_agents','human_actions','blockers','freshness'],agent:['id','role','kind','status','workstream','working','responsibilities'],workstream:['id','record_id','status'],edge:['id','from','to','kind','active','action'],activity:['actor_id','workstream','type','age','preview','detail'],session:['agent_id','treatment','value','unit','percent','storage','growth'],host:['load_1m','load_5m','load_15m','memory_free','disk_free','cpu_count','uptime','gpu_memory']};
  const treatmentLabel=value=>value==='Limit ?'?'Limit unknown':value;
  const colors={observed:'#3fe07a',waiting:'#5aa9ff',stale:'#9aa4b2','human-action':'#f2b90c',blocked:'#ff6161',unknown:'#9aa4b2',external:'#b388ff'};
@@ -11,8 +11,10 @@
  const $=(q,root=document)=>root.querySelector(q),$$=(q,root=document)=>[...root.querySelectorAll(q)];
  function exact(value,keys){if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('schema');}
  function validate(){
-  exact(D,allowed.root);exact(D.summary,allowed.summary);exact(D.host,allowed.host);
-  if(D.schema_version!==1)throw Error('schema');
+  const rootKeys=Object.keys(D),optional=['model_usage','workflow_graph'];
+  if(allowed.root.some(k=>!rootKeys.includes(k))||rootKeys.some(k=>!allowed.root.includes(k)&&!optional.includes(k)))throw Error('schema');
+  exact(D.summary,allowed.summary);exact(D.host,allowed.host);
+  if(![1,2].includes(D.schema_version)||D.schema_version===1&&optional.some(k=>k in D))throw Error('schema');
   for(const [key,kind] of [['agents','agent'],['workstreams','workstream'],['edges','edge'],['activity','activity'],['sessions','session']]){if(!Array.isArray(D[key]))throw Error('schema');D[key].forEach(v=>exact(v,allowed[kind]));}
   const ids=D.agents.map(a=>a.id);
   if(ids.length!==7||new Set(ids).size!==7||ids.some(id=>!P.positions[id]))throw Error('schema');
@@ -21,6 +23,8 @@
   D.sessions.forEach(s=>{if(!ids.includes(s.agent_id)||!(s.percent===null||(Number.isFinite(s.percent)&&s.percent>=0&&s.percent<=100&&['Measured','Configured','Stale','Illustrative'].includes(s.treatment))))throw Error('schema');if(s.treatment==='Limit ?'&&s.percent!==null)throw Error('schema');});
   D.edges.forEach(e=>{if(!ids.includes(e.from)||!ids.includes(e.to))throw Error('schema');});
   D.activity.forEach(a=>{if(!ids.includes(a.actor_id))throw Error('schema');});
+  if(D.model_usage&&(!D.model_usage.windows||!D.model_usage.tracked_total||!Array.isArray(D.model_usage.agents)))throw Error('schema');
+  if(D.workflow_graph&&(!D.workflow_graph.manifest||!Array.isArray(D.workflow_graph.events)||!D.workflow_graph.run))throw Error('schema');
  }
  function avatar(a){const i=P.identity[a.id];return `<span class="ap-avatar" style="--identity:${i.ring};--fill:${i.fill};--ink:${i.icon}">${P.slot_icons?.[a.id]||P.icons[a.kind]}</span>`;}
  function agent(id){return D.agents.find(a=>a.id===id);}
@@ -48,6 +52,58 @@
  function controls(){return `<div class="controls"><label><input id="fit" type="checkbox">Fit view</label><label><input id="full" type="checkbox" role="switch">Fullscreen</label><label class="filter">Workstream filter<select id="filter"><option value="both">Both workstreams</option><option>Workstream-01</option><option>Workstream-02</option></select></label><label><input id="handoffs" type="checkbox" checked>Show recent hand-offs</label><label><input id="motion" type="checkbox" aria-describedby="motion-status">Activity animation <span id="motion-status" class="motion-status" role="status" aria-live="polite"></span></label></div>`;}
  function table(head,rows){return `<div class="table-wrap"><table><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(v=>`<td>${esc(v??'Not measured')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
  function panel(title,body){return `<section class="panel"><h2>${esc(title)}</h2>${body}</section>`;}
+ function shortTokens(value){if(value===null||value===undefined)return 'Unknown';if(value>=1e9)return (value/1e9).toFixed(2).replace(/0+$/,'').replace(/\.$/,'')+'B';if(value>=1e6)return (value/1e6).toFixed(1).replace(/\.0$/,'')+'M';if(value>=1e3)return (value/1e3).toFixed(1).replace(/\.0$/,'')+'k';return String(value);}
+ function moneyRange(row){if(row.value_low===null||row.value_high===null)return 'Unknown';const low='$'+Number(row.value_low).toLocaleString(undefined,{maximumFractionDigits:0});const high='$'+Number(row.value_high).toLocaleString(undefined,{maximumFractionDigits:0});return row.value_low===row.value_high?low:low+' - '+high;}
+ function usageTeaser(){
+  if(!D.model_usage)return '';
+  const u=D.model_usage,w=u.windows['7d'],input=w.input_tokens+w.cached_input_tokens,share=input?100*w.cached_input_tokens/input:0;
+  return '<section class="mu-teaser"><div><span>MODEL USAGE</span><strong>'+shortTokens(w.observed_tokens)+'</strong><small>last 7 days</small></div><div><span>API-EQUIVALENT VALUE</span><strong>'+moneyRange(w)+'</strong><small>indicative only</small></div><div><span>CACHED SHARE</span><strong>'+share.toFixed(1)+'%</strong><small>of input</small></div></section>';
+ }
+ function usagePanel(windowKey){
+  if(!D.model_usage)return panel('Model Usage & API Value','<p>Not measured</p>');
+  const u=D.model_usage,key=windowKey||'7d',w=u.windows[key],input=w.input_tokens+w.cached_input_tokens,share=input?100*w.cached_input_tokens/input:0;
+  const windows=['24h','7d','30d'].map(k=>'<button type="button" class="mu-window'+(k===key?' active':'')+'" data-window="'+k+'">'+k.replace('d',' d')+'</button>').join('');
+  const cards=[
+   ['LAST '+key.toUpperCase(),shortTokens(w.observed_tokens)+' tokens','observed usage'],
+   ['TRACKED TOTAL',shortTokens(u.tracked_total.observed_tokens)+' tokens','registered history'],
+   ['API-EQUIVALENT VALUE',moneyRange(w),'indicative only'],
+   ['CACHED SHARE',share.toFixed(1)+'%','of input']
+  ].map(r=>'<article class="mu-summary"><span>'+r[0]+'</span><strong>'+r[1]+'</strong><small>'+r[2]+'</small></article>').join('');
+  const agents=u.agents.map(a=>'<article class="mu-agent"><div><strong>'+esc(a.agent_id)+'</strong><span>'+esc(a.model||'Unknown model')+'</span></div><dl><dt>7d</dt><dd>'+shortTokens(a.tokens_7d)+'</dd><dt>Tracked</dt><dd>'+shortTokens(a.tracked_tokens)+'</dd><dt>Share</dt><dd>'+(a.share_percent>0&&a.share_percent<1?'&lt;1%':Math.round(a.share_percent)+'%')+'</dd></dl><div class="mu-bar"><i style="width:'+Math.min(100,a.share_percent)+'%"></i></div><small>'+esc(a.valuation_quality)+' valuation</small></article>').join('');
+  const c=u.coverage;
+  const details='<details class="panel mu-details"><summary>Usage evidence and coverage</summary>'+table(['Coverage','Value'],[['Included registered sources',c.included_registered_sources],['Excluded unmapped sessions',c.excluded_unmapped_sessions],['Conflicting events excluded',c.conflicting_events_excluded],['Unknown-model events',c.unknown_model_events]])+'<p>API-equivalent values are indicative estimates calculated from reviewed public API rates. They are not subscription charges or invoices.</p></details>';
+  return '<section id="usage-panel" class="mu-root"><header><div><h2>Model Usage & API Value</h2><p>Historical usage, separate from current Session Context</p></div><div class="mu-windows" aria-label="Usage window">'+windows+'</div></header><div class="mu-grid">'+cards+'</div><div class="mu-agents">'+agents+'</div><p class="mu-disclaimer">Indicative public API-equivalent value. Not subscription or billed cost.</p>'+details+'</section>';
+ }
+ function workflowObservation(wf,id){
+  const n=wf.manifest.nodes.find(n=>n.node_id===id),events=wf.events.filter(e=>e.node_id===id),last=events[events.length-1];
+  if(!n)return '';
+  const paused=last?.event==='human_interrupt',status=last?.status||'Not observed';
+  return '<span>NODE INSPECTION</span><strong>'+esc(n.label)+'</strong><div class="wf-state">'+esc(status)+'</div><p>'+(paused?'Waiting for lab decision. None pending for the author.':last?esc(last.event.replaceAll('_',' ')):'No event recorded for this node.')+'</p><dl><dt>Run route</dt><dd>'+esc(wf.run.selected_route||'Not recorded')+'</dd><dt>Checkpoint</dt><dd>'+(last?.checkpointed?'Saved': 'Not recorded')+'</dd><dt>Observation</dt><dd>'+esc(last?.at_utc.slice(11,19)||'Not observed')+'</dd></dl><small>Observational only / no execution controls</small>';
+ }
+ function workflowPanel(){
+  if(!D.workflow_graph)return panel('Workflow & Trace','<p>Not configured</p>');
+  const wf=D.workflow_graph,m=wf.manifest,r=wf.run,visited=new Set(r.visited),routes=new Set(r.selected_routes||[]);
+  const current=m.nodes.find(n=>n.label===r.current_node)?.node_id||m.nodes[0].node_id;
+  const summary=[['RUN STATE',r.state],['CURRENT NODE',r.current_node],['LAB RETRY ATTEMPTS',r.retries],['SELECTED ROUTE',r.selected_route||'None']].map(x=>'<article><span>'+x[0]+'</span><strong>'+esc(x[1])+'</strong></article>').join('');
+  const edgeLabels=[];
+  const edges=m.edges.map(e=>{
+   const a=m.nodes.find(n=>n.node_id===e.from),b=m.nodes.find(n=>n.node_id===e.to),selected=visited.has(e.from)&&visited.has(e.to)&&(e.condition===null||routes.has(e.condition)),reverse=m.edges.some(other=>other.from===e.to&&other.to===e.from);
+   const cls=selected?'selected':'possible';
+   let shape,tx=(a.x+b.x)/2,ty=(a.y+b.y)/2-3;
+   if(reverse){
+    const lift=a.x<b.x?-48:48,ax=a.x*10,ay=a.y*3.6,bx=b.x*10,by=b.y*3.6;
+    shape='<path class="'+cls+'" d="M '+ax+' '+ay+' Q '+((ax+bx)/2)+' '+((ay+by)/2+lift)+' '+bx+' '+by+'"></path>';
+    ty=(a.y+b.y)/2+lift/7.2+(lift<0?-4:5);
+   }else shape='<line class="'+cls+'" x1="'+a.x+'%" y1="'+a.y+'%" x2="'+b.x+'%" y2="'+b.y+'%"></line>';
+   if(e.condition)edgeLabels.push('<span class="wf-edge-label '+cls+'" style="left:'+tx+'%;top:'+ty+'%">'+esc(e.condition)+'</span>');
+   return shape;
+  }).join('');
+  const nodes=m.nodes.map(n=>'<button type="button" aria-pressed="'+(n.node_id===current)+'" class="wf-node '+(visited.has(n.node_id)?'visited ':'')+(n.node_id===current?'current':'')+'" style="--x:'+n.x+'%;--y:'+n.y+'%" data-workflow-node="'+n.node_id+'"><small>'+esc(n.kind.replace('_',' '))+'</small><span>'+esc(n.label)+'</span></button>').join('');
+  const timeline=r.timeline.map((t,i)=>{const tone=t.event.includes('human')?'human':t.event.includes('retry')?'retry':t.event.includes('route')?'route':'task';return '<li class="wf-event-'+tone+'"><b>'+String(i+1).padStart(2,'0')+'</b><strong>'+esc(t.node)+'</strong><time>'+esc(t.at.slice(11,19))+'</time><span>'+esc(t.event)+(wf.events[i]?.route?' / '+esc(wf.events[i].route):'')+(t.attempt?' / attempt '+t.attempt:'')+(wf.events[i]?.checkpointed?' / checkpoint saved':'')+'</span></li>';}).join('');
+  const legend=[['Node','one workflow step'],['Parallel branches','fan-out'],['Join','branches converge'],['Conditional route','accept / revise'],['Human gate','interrupt + checkpoint'],['Semantic trace','ordered observations']].map(x=>'<div><strong>'+x[0]+'</strong><span>'+x[1]+'</span></div>').join('');
+  const raw='<details class="panel wf-raw"><summary>Raw normalized events</summary><pre>'+esc(JSON.stringify(wf.events,null,2))+'</pre></details>';
+  return '<section class="wf-root"><header><div><span class="wf-badge">SYNTHETIC LAB</span><h2>Workflow & Trace</h2><p>Illustrates graph-style workflow mechanics. Synthetic example, not a real user/project workflow.</p></div><span class="wf-readonly">OBSERVATIONAL ONLY</span></header><div class="wf-summary">'+summary+'</div><div class="wf-layout"><div class="wf-graph"><svg viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true">'+edges+'</svg>'+edgeLabels.join('')+nodes+'<div class="wf-graph-key">Solid: selected route <span>Dashed: other paths</span></div></div><aside class="wf-inspector" aria-live="polite">'+workflowObservation(wf,current)+'</aside></div><div class="wf-mapping" aria-label="Graph-style workflow concepts">'+legend+'</div><section class="wf-timeline"><h3>Semantic timeline <small>Recorded sequence / UTC</small></h3><ol>'+timeline+'</ol></section>'+raw+'</section>';
+ }
  function eventsTable(){return table(['Actor','Workstream','Type',replay?'Recorded age':'Source age','Activity'],D.activity.map(r=>[r.actor_id,r.workstream,r.type,r.age,r.preview]));}
  function observedTable(){return table(['Agent','Role','Workstream','Status','Working'],D.agents.filter(a=>a.id.startsWith('A')).map(a=>[a.id,a.role,a.workstream||'Both',a.status,a.working?'Observed':'No approved activity']));}
  function workstreams(){return `<div class="two-col">${D.workstreams.map(w=>panel(w.id,`<p><span class="badge">${esc(w.status)}</span></p><p>Record: <strong>${w.record_id}</strong></p><p class="muted">Stage: Not measured</p>${table(['Agent','Role','Status'],D.agents.filter(a=>a.workstream===w.id).map(a=>[a.id,a.role,a.status]))}<details><summary>${replay?'Recorded':'Source'} activity</summary>${table(['Actor','Entry'],D.activity.filter(a=>a.workstream===w.id).map(a=>[a.actor_id,a.detail]))}</details>`)).join('')}</div>`;}
@@ -64,8 +120,8 @@
  try{
   validate();
   $('#tabs').innerHTML=names.map((name,i)=>`<button role="tab" id="tab-${i}" aria-controls="view-${i}" aria-selected="${i===1}" tabindex="${i===1?0:-1}" data-tab="${i}"><p>${name}</p></button>`).join('');
-  const overview=`<h2 class="section-title">At a glance</h2><div class="six-col">${[['Workstream-01','Unknown'],['Workstream-02','Unknown'],['Owner action',D.summary.human_actions],['Observed sessions',D.summary.active_agents+'/'+D.summary.monitored_agents],['Usage today','Not measured'],['Blockers',D.summary.blockers]].map(([k,v])=>`<section class="panel"><span class="muted">${k}</span><div class="big">${v}</div></section>`).join('')}</div><h2 class="section-title">Workstream summaries</h2>${workstreams()}${panel('Next actions',eventsTable())}`;
-  const content=[header()+overview,header()+controls()+`<div class="map-panels">${topology()}${recent()}</div>`+sessions()+host(),inspectorShell(),header()+panel(replay?'Last hand-offs per workstream (RECORDED)':'Last hand-offs per workstream',eventsTable())+panel('Observed activity per agent',observedTable()),header()+workstreams()+panel('Waiting on owner',table(['Actor','Request'],D.activity.filter(r=>r.type==='decision').map(r=>[r.actor_id,r.detail]))),header()+panel('Observed sessions',observedTable())+panel('Host',host())+sessions()+panel('Context and storage measurements',table(['Agent','Value','Treatment','Session storage','Growth'],D.sessions.map(s=>[s.agent_id,s.value,treatmentLabel(s.treatment),s.storage,s.growth||'Not measured'])))+panel('Usage and cost','<p>Not measured</p>'),header()+panel(replay?'Last recorded entries per workstream':'Last source entries per workstream',eventsTable())+panel(replay?'Replay diagnostics':'Local diagnostics',table(['Check','State'],[['Data',replay?'Approved static snapshot':'Configured local snapshot'],['Collection',replay?'Recorded replay':'Local observation'],['Network connection','None'],['Live error measurement','Not measured']]))+`<details class="panel"><summary>Public snapshot details</summary><pre>${esc(JSON.stringify(D,null,2))}</pre></details>`];
+  const overview=`<h2 class="section-title">At a glance</h2><div class="six-col">${[['Workstream-01','Unknown'],['Workstream-02','Unknown'],['Owner action',D.summary.human_actions],['Observed sessions',D.summary.active_agents+'/'+D.summary.monitored_agents],['Usage history',D.model_usage?shortTokens(D.model_usage.windows['7d'].observed_tokens):'Not measured'],['Blockers',D.summary.blockers]].map(([k,v])=>`<section class="panel"><span class="muted">${k}</span><div class="big">${v}</div></section>`).join('')}</div>${usageTeaser()}<h2 class="section-title">Workstream summaries</h2>${workstreams()}${panel('Next actions',eventsTable())}`;
+  const content=[header()+overview,header()+controls()+`<div class="map-panels">${topology()}${recent()}</div>`+sessions()+host(),inspectorShell(),header()+panel(replay?'Last hand-offs per workstream (RECORDED)':'Last hand-offs per workstream',eventsTable())+panel('Observed activity per agent',observedTable()),header()+workstreams()+panel('Waiting on owner',table(['Actor','Request'],D.activity.filter(r=>r.type==='decision').map(r=>[r.actor_id,r.detail]))),header()+panel('Observed sessions',observedTable())+panel('Host',host())+sessions()+panel('Context and storage measurements',table(['Agent','Value','Treatment','Session storage','Growth'],D.sessions.map(s=>[s.agent_id,s.value,treatmentLabel(s.treatment),s.storage,s.growth||'Not measured'])))+usagePanel(),header()+panel(replay?'Last recorded entries per workstream':'Last source entries per workstream',eventsTable())+panel(replay?'Replay diagnostics':'Local diagnostics',table(['Check','State'],[['Data',replay?'Approved static snapshot':'Configured local snapshot'],['Collection',replay?'Recorded replay':'Local observation'],['Network connection','None'],['Live error measurement','Not measured']]))+`<details class="panel"><summary>Public snapshot details</summary><pre>${esc(JSON.stringify(D,null,2))}</pre></details>`,header()+workflowPanel()];
   $('#views').innerHTML=content.map((c,i)=>`<section role="tabpanel" id="view-${i}" aria-labelledby="tab-${i}" ${i===1?'':'hidden'}>${c}</section>`).join('');
   const root=$('.av-root'),stage=$('.av-stage'),rotor=$('.av-beam-rotor');
   document.documentElement.style.setProperty('--map-height',P.normal_height+'px');
@@ -93,7 +149,9 @@
  if(!replay){$('.replay-badge').textContent='LOCAL OBSERVATION';$$('.ap-caption').forEach(n=>n.textContent='Source order retained. Source-provided ages.');}
   function selection(id){state.selected=id;$$('.av-node').forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.node===id)));const a=agent(id);$('.av-selection-note').textContent=a?`${a.id}  -  ${a.role}  -  ${a.status}. Open Inspector for details.`:`${id}  -  Workstream Record`;}
   $$('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(Number(b.dataset.tab))));
-  $('#tabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?6:(state.tab+(e.key==='ArrowRight'?1:6))%7;switchTab(n);$('#tab-'+n).focus();}});
+  $('#tabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?names.length-1:(state.tab+(e.key==='ArrowRight'?1:names.length-1))%names.length;switchTab(n);$('#tab-'+n).focus();}});
+  function wireUsage(){$$('.mu-window').forEach(b=>b.addEventListener('click',()=>{const root=$('#usage-panel');if(root){root.outerHTML=usagePanel(b.dataset.window);wireUsage();}}));}wireUsage();
+  $$('[data-workflow-node]').forEach(n=>n.addEventListener('click',()=>{$('.wf-inspector').innerHTML=workflowObservation(D.workflow_graph,n.dataset.workflowNode);$$('[data-workflow-node]').forEach(b=>b.setAttribute('aria-pressed',String(b===n)));}));
   $$('.av-node').forEach(n=>n.addEventListener('click',()=>selection(n.dataset.node)));
   $$('[data-session]').forEach(n=>{const open=()=>{state.selected=n.dataset.session;switchTab(2);};n.addEventListener('click',open);n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});});
   $$('[data-event]').forEach(b=>b.addEventListener('click',()=>{const r=D.activity[Number(b.dataset.event)];state.selected=r.actor_id;switchTab(2);$('#inspector-event').innerHTML=panel('Complete recorded entry',`<p class="detail-text">${esc(r.preview+'\n'+r.detail)}</p>`);}));

@@ -12,7 +12,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": 1
+      "enum": [1, 2]
     },
     "snapshot_kind": {
       "enum": [
@@ -45,6 +45,12 @@
     },
     "host": {
       "$ref": "#/$defs/host"
+    },
+    "model_usage": {
+      "type": "object"
+    },
+    "workflow_graph": {
+      "type": "object"
     }
   },
   "$defs": {

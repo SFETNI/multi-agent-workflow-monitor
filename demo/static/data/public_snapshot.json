@@ -156,7 +156,223 @@
     "memory_free": "66.8 GB",
     "uptime": "345d 21h"
   },
-  "schema_version": 1,
+  "model_usage": {
+    "agents": [
+      {
+        "agent_id": "A-01",
+        "model": "gpt-4.1",
+        "provider": "openai",
+        "share_percent": 32.4,
+        "tokens_7d": 460000000,
+        "tracked_tokens": 1820000000,
+        "valuation_quality": "exact"
+      },
+      {
+        "agent_id": "A-02",
+        "model": "claude-sonnet-5",
+        "provider": "anthropic",
+        "share_percent": 26.8,
+        "tokens_7d": 380000000,
+        "tracked_tokens": 1510000000,
+        "valuation_quality": "exact"
+      },
+      {
+        "agent_id": "A-03",
+        "model": "grok-4.6",
+        "provider": "xai",
+        "share_percent": 21.1,
+        "tokens_7d": 300000000,
+        "tracked_tokens": 1120000000,
+        "valuation_quality": "bounded"
+      },
+      {
+        "agent_id": "A-04",
+        "model": "gemini-3.8-flash",
+        "provider": "google",
+        "share_percent": 14.1,
+        "tokens_7d": 200000000,
+        "tracked_tokens": 920000000,
+        "valuation_quality": "exact"
+      },
+      {
+        "agent_id": "A-05",
+        "model": null,
+        "provider": "moonshot",
+        "share_percent": 5.6,
+        "tokens_7d": 80000000,
+        "tracked_tokens": 500000000,
+        "valuation_quality": "unknown"
+      }
+    ],
+    "coverage": {
+      "conflicting_events_excluded": 0,
+      "excluded_unmapped_sessions": 1,
+      "included_registered_sources": 5,
+      "unknown_model_events": 1
+    },
+    "events": [
+      {
+        "agent_id": "A-01",
+        "billing_mode": "API_EQUIVALENT",
+        "cache_write_1h_tokens": null,
+        "cache_write_5m_tokens": null,
+        "cache_write_tokens": null,
+        "cached_input_tokens": 1620000,
+        "event_at_utc": "2026-09-19T12:08:00Z",
+        "input_tokens": 120000,
+        "model": "gpt-4.1",
+        "model_confidence": "exact",
+        "model_source": "adapter",
+        "output_tokens": 42000,
+        "pricing_context": {
+          "batch": false,
+          "context_tokens": 100000,
+          "fast": false,
+          "region": null,
+          "service_tier": "standard"
+        },
+        "provider": "openai",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "reasoning_tokens": 9000,
+        "schema_version": 1,
+        "total_semantics": "components_exclusive",
+        "total_tokens": 1782000,
+        "workstream_id": "Workstream-01"
+      },
+      {
+        "agent_id": "A-02",
+        "billing_mode": "API_EQUIVALENT",
+        "cache_write_1h_tokens": null,
+        "cache_write_5m_tokens": 200000,
+        "cache_write_tokens": null,
+        "cached_input_tokens": 1100000,
+        "event_at_utc": "2026-09-19T12:09:00Z",
+        "input_tokens": 80000,
+        "model": "claude-sonnet-5",
+        "model_confidence": "exact",
+        "model_source": "adapter",
+        "output_tokens": 36000,
+        "pricing_context": {
+          "batch": false,
+          "context_tokens": 100000,
+          "fast": false,
+          "region": null,
+          "service_tier": "standard"
+        },
+        "provider": "anthropic",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "reasoning_tokens": null,
+        "schema_version": 1,
+        "total_semantics": "components_exclusive",
+        "total_tokens": 1416000,
+        "workstream_id": "Workstream-01"
+      },
+      {
+        "agent_id": "A-03",
+        "billing_mode": "API_EQUIVALENT",
+        "cache_write_1h_tokens": null,
+        "cache_write_5m_tokens": null,
+        "cache_write_tokens": null,
+        "cached_input_tokens": 870000,
+        "event_at_utc": "2026-09-19T12:10:00Z",
+        "input_tokens": 90000,
+        "model": "grok-4.6",
+        "model_confidence": "exact",
+        "model_source": "adapter",
+        "output_tokens": 31000,
+        "pricing_context": {
+          "batch": false,
+          "context_tokens": null,
+          "fast": false,
+          "region": null,
+          "service_tier": "standard"
+        },
+        "provider": "xai",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "reasoning_tokens": 6000,
+        "schema_version": 1,
+        "total_semantics": "components_exclusive",
+        "total_tokens": null,
+        "workstream_id": "Workstream-02"
+      },
+      {
+        "agent_id": "A-05",
+        "billing_mode": "UNKNOWN",
+        "cache_write_1h_tokens": null,
+        "cache_write_5m_tokens": null,
+        "cache_write_tokens": null,
+        "cached_input_tokens": 98000,
+        "event_at_utc": "2026-09-19T12:11:00Z",
+        "input_tokens": 12000,
+        "model": null,
+        "model_confidence": "unknown",
+        "model_source": "adapter",
+        "output_tokens": 7000,
+        "pricing_context": {
+          "batch": false,
+          "context_tokens": 100000,
+          "fast": false,
+          "region": null,
+          "service_tier": "standard"
+        },
+        "provider": "moonshot",
+        "provider_reported_value": null,
+        "provider_reported_value_kind": null,
+        "reasoning_tokens": null,
+        "schema_version": 1,
+        "total_semantics": "components_exclusive",
+        "total_tokens": 117000,
+        "workstream_id": "Workstream-02"
+      }
+    ],
+    "schema_version": 1,
+    "tracked_total": {
+      "cached_input_tokens": 5270000000,
+      "event_count": 1137,
+      "input_tokens": 382000000,
+      "observed_tokens": 5870000000,
+      "output_tokens": 218000000,
+      "valuation_quality": "bounded",
+      "value_high": 2862.9,
+      "value_low": 2791.9
+    },
+    "windows": {
+      "24h": {
+        "cached_input_tokens": 196000000,
+        "event_count": 42,
+        "input_tokens": 15000000,
+        "observed_tokens": 220000000,
+        "output_tokens": 9000000,
+        "valuation_quality": "bounded",
+        "value_high": 104.7,
+        "value_low": 103.0
+      },
+      "30d": {
+        "cached_input_tokens": 3780000000,
+        "event_count": 812,
+        "input_tokens": 273000000,
+        "observed_tokens": 4200000000,
+        "output_tokens": 147000000,
+        "valuation_quality": "bounded",
+        "value_high": 2040.2,
+        "value_low": 1992.9
+      },
+      "7d": {
+        "cached_input_tokens": 1280000000,
+        "event_count": 286,
+        "input_tokens": 90400000,
+        "observed_tokens": 1420000000,
+        "output_tokens": 49600000,
+        "valuation_quality": "bounded",
+        "value_high": 687.1,
+        "value_low": 675.2
+      }
+    }
+  },
+  "schema_version": 2,
   "sessions": [
     {
       "agent_id": "A-01",
@@ -213,6 +429,331 @@
     "monitored_agents": 5
   },
   "title": "Agent Workflow Monitor",
+  "workflow_graph": {
+    "events": [
+      {
+        "at_utc": "2026-09-19T12:13:00Z",
+        "attempt": 0,
+        "checkpointed": false,
+        "duration_ms": 0,
+        "event": "graph_started",
+        "human_action": false,
+        "node_id": null,
+        "parent_node_id": null,
+        "route": null,
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "running",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:13:05Z",
+        "attempt": 0,
+        "checkpointed": false,
+        "duration_ms": 5200,
+        "event": "node_completed",
+        "human_action": false,
+        "node_id": "prepare",
+        "parent_node_id": null,
+        "route": null,
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "completed",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:13:12Z",
+        "attempt": 0,
+        "checkpointed": false,
+        "duration_ms": 6800,
+        "event": "node_completed",
+        "human_action": false,
+        "node_id": "branch_a",
+        "parent_node_id": "prepare",
+        "route": null,
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "completed",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:13:14Z",
+        "attempt": 0,
+        "checkpointed": false,
+        "duration_ms": 8400,
+        "event": "node_completed",
+        "human_action": false,
+        "node_id": "branch_b",
+        "parent_node_id": "prepare",
+        "route": null,
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "completed",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:13:20Z",
+        "attempt": 0,
+        "checkpointed": false,
+        "duration_ms": 6100,
+        "event": "route_selected",
+        "human_action": false,
+        "node_id": "evaluate",
+        "parent_node_id": null,
+        "route": "revise",
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "completed",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:13:21Z",
+        "attempt": 1,
+        "checkpointed": true,
+        "duration_ms": 0,
+        "event": "retry_scheduled",
+        "human_action": false,
+        "node_id": "revise",
+        "parent_node_id": "evaluate",
+        "route": "retry",
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "scheduled",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:13:45Z",
+        "attempt": 1,
+        "checkpointed": false,
+        "duration_ms": 23800,
+        "event": "node_completed",
+        "human_action": false,
+        "node_id": "revise",
+        "parent_node_id": "evaluate",
+        "route": null,
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "completed",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:14:02Z",
+        "attempt": 1,
+        "checkpointed": false,
+        "duration_ms": 5900,
+        "event": "route_selected",
+        "human_action": false,
+        "node_id": "evaluate",
+        "parent_node_id": null,
+        "route": "accept",
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "completed",
+        "workflow_id": "WF-DEMO-01"
+      },
+      {
+        "at_utc": "2026-09-19T12:14:10Z",
+        "attempt": 0,
+        "checkpointed": true,
+        "duration_ms": 0,
+        "event": "human_interrupt",
+        "human_action": false,
+        "node_id": "human_gate",
+        "parent_node_id": null,
+        "route": null,
+        "run_id": "RUN-DEMO-01",
+        "schema_version": 1,
+        "status": "paused",
+        "workflow_id": "WF-DEMO-01"
+      }
+    ],
+    "manifest": {
+      "edges": [
+        {
+          "condition": null,
+          "from": "start",
+          "to": "prepare"
+        },
+        {
+          "condition": "fan-out",
+          "from": "prepare",
+          "to": "branch_a"
+        },
+        {
+          "condition": "fan-out",
+          "from": "prepare",
+          "to": "branch_b"
+        },
+        {
+          "condition": "join",
+          "from": "branch_a",
+          "to": "evaluate"
+        },
+        {
+          "condition": "join",
+          "from": "branch_b",
+          "to": "evaluate"
+        },
+        {
+          "condition": "revise",
+          "from": "evaluate",
+          "to": "revise"
+        },
+        {
+          "condition": "accept",
+          "from": "evaluate",
+          "to": "human_gate"
+        },
+        {
+          "condition": "retry",
+          "from": "revise",
+          "to": "evaluate"
+        },
+        {
+          "condition": "approved",
+          "from": "human_gate",
+          "to": "complete"
+        }
+      ],
+      "label": "Synthetic release workflow",
+      "nodes": [
+        {
+          "kind": "start",
+          "label": "Start",
+          "node_id": "start",
+          "x": 7,
+          "y": 50
+        },
+        {
+          "kind": "task",
+          "label": "Prepare",
+          "node_id": "prepare",
+          "x": 22,
+          "y": 50
+        },
+        {
+          "kind": "task",
+          "label": "Build branch",
+          "node_id": "branch_a",
+          "x": 39,
+          "y": 28
+        },
+        {
+          "kind": "task",
+          "label": "Review branch",
+          "node_id": "branch_b",
+          "x": 39,
+          "y": 72
+        },
+        {
+          "kind": "evaluation",
+          "label": "Evaluate",
+          "node_id": "evaluate",
+          "x": 56,
+          "y": 50
+        },
+        {
+          "kind": "task",
+          "label": "Revise once",
+          "node_id": "revise",
+          "x": 68,
+          "y": 24
+        },
+        {
+          "kind": "human_gate",
+          "label": "Human approval",
+          "node_id": "human_gate",
+          "x": 76,
+          "y": 58
+        },
+        {
+          "kind": "end",
+          "label": "Complete",
+          "node_id": "complete",
+          "x": 93,
+          "y": 58
+        }
+      ],
+      "schema_version": 1,
+      "workflow_id": "WF-DEMO-01"
+    },
+    "run": {
+      "current_node": "Human approval",
+      "freshness": "Recent",
+      "retries": 1,
+      "selected_route": "accept",
+      "selected_routes": [
+        "revise",
+        "retry",
+        "accept"
+      ],
+      "state": "Paused",
+      "timeline": [
+        {
+          "at": "2026-09-19T12:13:00Z",
+          "attempt": 0,
+          "event": "graph started",
+          "node": "Workflow"
+        },
+        {
+          "at": "2026-09-19T12:13:05Z",
+          "attempt": 0,
+          "event": "node completed",
+          "node": "Prepare"
+        },
+        {
+          "at": "2026-09-19T12:13:12Z",
+          "attempt": 0,
+          "event": "node completed",
+          "node": "Build branch"
+        },
+        {
+          "at": "2026-09-19T12:13:14Z",
+          "attempt": 0,
+          "event": "node completed",
+          "node": "Review branch"
+        },
+        {
+          "at": "2026-09-19T12:13:20Z",
+          "attempt": 0,
+          "event": "route selected",
+          "node": "Evaluate"
+        },
+        {
+          "at": "2026-09-19T12:13:21Z",
+          "attempt": 1,
+          "event": "retry scheduled",
+          "node": "Revise once"
+        },
+        {
+          "at": "2026-09-19T12:13:45Z",
+          "attempt": 1,
+          "event": "node completed",
+          "node": "Revise once"
+        },
+        {
+          "at": "2026-09-19T12:14:02Z",
+          "attempt": 1,
+          "event": "route selected",
+          "node": "Evaluate"
+        },
+        {
+          "at": "2026-09-19T12:14:10Z",
+          "attempt": 0,
+          "event": "human interrupt",
+          "node": "Human approval"
+        }
+      ],
+      "visited": [
+        "prepare",
+        "branch_a",
+        "branch_b",
+        "evaluate",
+        "revise",
+        "human_gate"
+      ]
+    }
+  },
   "workstreams": [
     {
       "id": "Workstream-01",

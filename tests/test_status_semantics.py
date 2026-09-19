@@ -12,7 +12,7 @@ from agent_workflow_monitor.status_semantics import derive_status, should_animat
 from agent_workflow_monitor.usage import context_display
 
 ROOT = Path(__file__).resolve().parents[1]
-NOW = datetime(2026, 1, 15, 12, 15, tzinfo=timezone.utc)
+NOW = datetime(2026, 9, 19, 12, 15, tzinfo=timezone.utc)
 
 
 def participants():
@@ -25,15 +25,15 @@ def test_responsibility_does_not_imply_execution():
 
 
 def test_fresh_observed_signal_is_active():
-    assert derive_status(declared_status="observed_active", status_basis="observed", last_observed_at="2026-01-15T12:14:30Z", freshness_seconds=60, now=NOW) == "observed_active"
+    assert derive_status(declared_status="observed_active", status_basis="observed", last_observed_at="2026-09-19T12:14:30Z", freshness_seconds=60, now=NOW) == "observed_active"
 
 
 def test_old_observed_signal_is_stale():
-    assert derive_status(declared_status="observed_active", status_basis="observed", last_observed_at="2026-01-15T12:10:00Z", freshness_seconds=60, now=NOW) == "stale"
+    assert derive_status(declared_status="observed_active", status_basis="observed", last_observed_at="2026-09-19T12:10:00Z", freshness_seconds=60, now=NOW) == "stale"
 
 
 def test_active_without_observed_basis_becomes_unknown():
-    assert derive_status(declared_status="observed_active", status_basis="recorded", last_observed_at="2026-01-15T12:14:30Z", freshness_seconds=60, now=NOW) == "idle_unknown"
+    assert derive_status(declared_status="observed_active", status_basis="recorded", last_observed_at="2026-09-19T12:14:30Z", freshness_seconds=60, now=NOW) == "idle_unknown"
 
 
 def test_declared_blocked_without_evidence_becomes_unknown():

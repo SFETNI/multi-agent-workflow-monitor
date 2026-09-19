@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "windows": {
+    "24h": {
+      "observed_tokens": 220000000,
+      "input_tokens": 15000000,
+      "cached_input_tokens": 196000000,
+      "output_tokens": 9000000,
+      "event_count": 42,
+      "value_low": 103.0,
+      "value_high": 104.7,
+      "valuation_quality": "bounded"
+    },
+    "7d": {
+      "observed_tokens": 1420000000,
+      "input_tokens": 90400000,
+      "cached_input_tokens": 1280000000,
+      "output_tokens": 49600000,
+      "event_count": 286,
+      "value_low": 675.2,
+      "value_high": 687.1,
+      "valuation_quality": "bounded"
+    },
+    "30d": {
+      "observed_tokens": 4200000000,
+      "input_tokens": 273000000,
+      "cached_input_tokens": 3780000000,
+      "output_tokens": 147000000,
+      "event_count": 812,
+      "value_low": 1992.9,
+      "value_high": 2040.2,
+      "valuation_quality": "bounded"
+    }
+  },
+  "tracked_total": {
+    "observed_tokens": 5870000000,
+    "input_tokens": 382000000,
+    "cached_input_tokens": 5270000000,
+    "output_tokens": 218000000,
+    "event_count": 1137,
+    "value_low": 2791.9,
+    "value_high": 2862.9,
+    "valuation_quality": "bounded"
+  },
+  "agents": [
+    {
+      "agent_id": "A-01",
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "tokens_7d": 460000000,
+      "tracked_tokens": 1820000000,
+      "share_percent": 32.4,
+      "valuation_quality": "exact"
+    },
+    {
+      "agent_id": "A-02",
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+      "tokens_7d": 380000000,
+      "tracked_tokens": 1510000000,
+      "share_percent": 26.8,
+      "valuation_quality": "exact"
+    },
+    {
+      "agent_id": "A-03",
+      "provider": "xai",
+      "model": "grok-4.6",
+      "tokens_7d": 300000000,
+      "tracked_tokens": 1120000000,
+      "share_percent": 21.1,
+      "valuation_quality": "bounded"
+    },
+    {
+      "agent_id": "A-04",
+      "provider": "google",
+      "model": "gemini-3.8-flash",
+      "tokens_7d": 200000000,
+      "tracked_tokens": 920000000,
+      "share_percent": 14.1,
+      "valuation_quality": "exact"
+    },
+    {
+      "agent_id": "A-05",
+      "provider": "moonshot",
+      "model": null,
+      "tokens_7d": 80000000,
+      "tracked_tokens": 500000000,
+      "share_percent": 5.6,
+      "valuation_quality": "unknown"
+    }
+  ],
+  "coverage": {
+    "included_registered_sources": 5,
+    "excluded_unmapped_sessions": 1,
+    "conflicting_events_excluded": 0,
+    "unknown_model_events": 1
+  },
+  "events": [
+    {
+      "schema_version": 1,
+      "event_at_utc": "2026-09-19T12:08:00Z",
+      "agent_id": "A-01",
+      "workstream_id": "Workstream-01",
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "model_source": "adapter",
+      "model_confidence": "exact",
+      "input_tokens": 120000,
+      "cached_input_tokens": 1620000,
+      "cache_write_tokens": null,
+      "cache_write_5m_tokens": null,
+      "cache_write_1h_tokens": null,
+      "output_tokens": 42000,
+      "reasoning_tokens": 9000,
+      "total_tokens": 1782000,
+      "total_semantics": "components_exclusive",
+      "billing_mode": "API_EQUIVALENT",
+      "provider_reported_value": null,
+      "provider_reported_value_kind": null,
+      "pricing_context": {
+        "context_tokens": 100000,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "region": null
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_at_utc": "2026-09-19T12:09:00Z",
+      "agent_id": "A-02",
+      "workstream_id": "Workstream-01",
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+      "model_source": "adapter",
+      "model_confidence": "exact",
+      "input_tokens": 80000,
+      "cached_input_tokens": 1100000,
+      "cache_write_tokens": null,
+      "cache_write_5m_tokens": 200000,
+      "cache_write_1h_tokens": null,
+      "output_tokens": 36000,
+      "reasoning_tokens": null,
+      "total_tokens": 1416000,
+      "total_semantics": "components_exclusive",
+      "billing_mode": "API_EQUIVALENT",
+      "provider_reported_value": null,
+      "provider_reported_value_kind": null,
+      "pricing_context": {
+        "context_tokens": 100000,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "region": null
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_at_utc": "2026-09-19T12:10:00Z",
+      "agent_id": "A-03",
+      "workstream_id": "Workstream-02",
+      "provider": "xai",
+      "model": "grok-4.6",
+      "model_source": "adapter",
+      "model_confidence": "exact",
+      "input_tokens": 90000,
+      "cached_input_tokens": 870000,
+      "cache_write_tokens": null,
+      "cache_write_5m_tokens": null,
+      "cache_write_1h_tokens": null,
+      "output_tokens": 31000,
+      "reasoning_tokens": 6000,
+      "total_tokens": null,
+      "total_semantics": "components_exclusive",
+      "billing_mode": "API_EQUIVALENT",
+      "provider_reported_value": null,
+      "provider_reported_value_kind": null,
+      "pricing_context": {
+        "context_tokens": null,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "region": null
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_at_utc": "2026-09-19T12:11:00Z",
+      "agent_id": "A-05",
+      "workstream_id": "Workstream-02",
+      "provider": "moonshot",
+      "model": null,
+      "model_source": "adapter",
+      "model_confidence": "unknown",
+      "input_tokens": 12000,
+      "cached_input_tokens": 98000,
+      "cache_write_tokens": null,
+      "cache_write_5m_tokens": null,
+      "cache_write_1h_tokens": null,
+      "output_tokens": 7000,
+      "reasoning_tokens": null,
+      "total_tokens": 117000,
+      "total_semantics": "components_exclusive",
+      "billing_mode": "UNKNOWN",
+      "provider_reported_value": null,
+      "provider_reported_value_kind": null,
+      "pricing_context": {
+        "context_tokens": 100000,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "region": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "reviewed_at_utc": "2026-09-19T00:00:00Z",
+  "providers": [
+    "anthropic",
+    "deepseek",
+    "google",
+    "moonshot",
+    "openai",
+    "xai"
+  ],
+  "entries": [
+    {
+      "provider": "openai",
+      "canonical_model": "gpt-4.1",
+      "aliases": [],
+      "effective_from_utc": "2025-04-14T00:00:00Z",
+      "effective_to_utc": null,
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "rates": {
+        "input": 2.0,
+        "cached_input": 0.5,
+        "output": 8.0,
+        "tool_dimensions": []
+      },
+      "rules": {
+        "short_context": null,
+        "long_context": null,
+        "context_threshold_tokens": null,
+        "peak_off_peak": null,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "regional_multiplier": null,
+        "conditions": []
+      },
+      "provenance": {
+        "source_type": "official_provider",
+        "source_url": "https://openai.com/index/gpt-4-1/",
+        "retrieved_at_utc": "2026-09-19T00:00:00Z",
+        "reviewed_at_utc": "2026-09-19T00:00:00Z",
+        "review_status": "reviewed"
+      }
+    },
+    {
+      "provider": "anthropic",
+      "canonical_model": "claude-sonnet-4-20250514",
+      "aliases": [],
+      "effective_from_utc": "2025-05-22T00:00:00Z",
+      "effective_to_utc": "2026-06-15T00:00:00Z",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "rates": {
+        "input": 3.0,
+        "cache_write_5m": 3.75,
+        "cache_write_1h": 6.0,
+        "cached_input": 0.3,
+        "output": 15.0,
+        "tool_dimensions": []
+      },
+      "rules": {
+        "short_context": null,
+        "long_context": null,
+        "context_threshold_tokens": null,
+        "peak_off_peak": null,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "regional_multiplier": null,
+        "conditions": [
+          "retired 2026-06-15"
+        ]
+      },
+      "provenance": {
+        "source_type": "official_provider",
+        "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "retrieved_at_utc": "2026-09-19T00:00:00Z",
+        "reviewed_at_utc": "2026-09-19T00:00:00Z",
+        "review_status": "reviewed"
+      }
+    },
+    {
+      "provider": "anthropic",
+      "canonical_model": "claude-sonnet-5",
+      "aliases": [],
+      "effective_from_utc": "2026-06-30T00:00:00Z",
+      "effective_to_utc": null,
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "rates": {
+        "input": 2.0,
+        "cache_write_5m": 2.5,
+        "cache_write_1h": 4.0,
+        "cached_input": 0.2,
+        "output": 10.0,
+        "tool_dimensions": []
+      },
+      "rules": {
+        "short_context": null,
+        "long_context": null,
+        "context_threshold_tokens": null,
+        "peak_off_peak": null,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "regional_multiplier": null,
+        "conditions": [
+          "launched 2026-06-30"
+        ]
+      },
+      "provenance": {
+        "source_type": "official_provider",
+        "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "retrieved_at_utc": "2026-09-19T00:00:00Z",
+        "reviewed_at_utc": "2026-09-19T00:00:00Z",
+        "review_status": "reviewed"
+      }
+    },
+    {
+      "provider": "xai",
+      "canonical_model": "grok-4.6",
+      "aliases": [],
+      "effective_from_utc": "2026-09-19T00:00:00Z",
+      "effective_to_utc": null,
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "rates": {
+        "input": 2.0,
+        "cached_input": 0.5,
+        "output": 6.0,
+        "tool_dimensions": []
+      },
+      "rules": {
+        "short_context": {
+          "input": 2.0,
+          "cached_input": 0.5,
+          "output": 6.0
+        },
+        "long_context": {
+          "input": 4.0,
+          "cached_input": 1.0,
+          "output": 12.0
+        },
+        "context_threshold_tokens": 200000,
+        "peak_off_peak": null,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "regional_multiplier": null,
+        "conditions": [
+          "complete cached and context-tier schedule effective from conservative review date"
+        ]
+      },
+      "provenance": {
+        "source_type": "official_provider",
+        "source_url": "https://docs.x.ai/developers/pricing",
+        "retrieved_at_utc": "2026-09-19T00:00:00Z",
+        "reviewed_at_utc": "2026-09-19T00:00:00Z",
+        "review_status": "reviewed"
+      }
+    },
+    {
+      "provider": "google",
+      "canonical_model": "gemini-3.8-flash",
+      "aliases": [],
+      "effective_from_utc": "2026-09-02T00:00:00Z",
+      "effective_to_utc": "2027-01-01T00:00:00Z",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "rates": {
+        "input": 0.75,
+        "cached_input": 0.075,
+        "output": 3.75,
+        "tool_dimensions": []
+      },
+      "rules": {
+        "short_context": null,
+        "long_context": null,
+        "context_threshold_tokens": null,
+        "peak_off_peak": null,
+        "service_tier": "standard",
+        "batch": false,
+        "fast": false,
+        "regional_multiplier": null,
+        "conditions": [
+          "introductory rate through 2026-12-31"
+        ]
+      },
+      "provenance": {
+        "source_type": "official_provider",
+        "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+        "retrieved_at_utc": "2026-09-19T00:00:00Z",
+        "reviewed_at_utc": "2026-09-19T00:00:00Z",
+        "review_status": "reviewed"
+      }
+    }
+  ]
+}

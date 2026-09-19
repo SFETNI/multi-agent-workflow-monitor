@@ -68,7 +68,7 @@ def audit(binary: str, executable: str, reference: Path | None = None) -> dict:
                 for route in (["static/index.html", "runtime.html", "reference/index.html"] if reference else ["static/index.html", "runtime.html"]):
                     driver.get(origin + route); time.sleep(.25)
                     assert not driver.find_element(By.ID, "safe-error").is_displayed()
-                    assert len(driver.find_elements(By.CSS_SELECTOR, "[role=tab]")) == 7
+                    assert len(driver.find_elements(By.CSS_SELECTOR, "[role=tab]")) == 8
                     assert len(driver.find_elements(By.CSS_SELECTOR, "#view-1 .ap-context-card")) == 5
                     assert len(driver.find_elements(By.CSS_SELECTOR, "#view-1 .hs-item")) == 8
                     sizes[route] = geometry(driver)
@@ -78,10 +78,34 @@ def audit(binary: str, executable: str, reference: Path | None = None) -> dict:
                     assert max(abs(a-b) for key in primary for a,b in zip(primary[key], values[key])) < .15, route
                 checks[f"geometry_{width}"] = True
             driver.get(origin + "static/index.html"); time.sleep(.15)
-            for i in range(7):
+            for i in range(8):
                 driver.find_element(By.ID, f"tab-{i}").click()
                 assert driver.find_element(By.ID, f"view-{i}").is_displayed()
-            checks["seven_views"] = True
+            checks["eight_views"] = True
+            driver.find_element(By.ID, "tab-5").click()
+            assert driver.find_elements(By.CSS_SELECTOR, ".mu-summary") and driver.find_elements(By.CSS_SELECTOR, ".mu-agent")
+            checks["usage_view"] = True
+            driver.find_element(By.ID, "tab-7").click()
+            assert driver.find_elements(By.CSS_SELECTOR, ".wf-node.current") and driver.find_elements(By.CSS_SELECTOR, ".wf-graph line.selected")
+            assert not driver.find_elements(By.XPATH, "//*[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'approve') and (self::button or self::a)]")
+            checks["workflow_view_read_only"] = True
+            assert len(driver.find_elements(By.CSS_SELECTOR, ".wf-mapping>div")) == 6
+            assert len(driver.find_elements(By.CSS_SELECTOR, ".wf-timeline li")) == 9
+            assert "accept" in driver.find_element(By.CSS_SELECTOR, ".wf-timeline").text
+            driver.find_element(By.CSS_SELECTOR, '[data-workflow-node="evaluate"]').click()
+            assert driver.find_element(By.CSS_SELECTOR, ".wf-inspector>strong").text == "Evaluate"
+            assert "completed" in driver.find_element(By.CSS_SELECTOR, ".wf-inspector").text.lower()
+            driver.find_element(By.CSS_SELECTOR, '[data-workflow-node="complete"]').click()
+            assert "No event recorded" in driver.find_element(By.CSS_SELECTOR, ".wf-inspector").text
+            driver.find_element(By.CSS_SELECTOR, '[data-workflow-node="human_gate"]').click()
+            assert "None pending for the author" in driver.find_element(By.CSS_SELECTOR, ".wf-inspector").text
+            assert driver.find_element(By.CSS_SELECTOR, '.wf-node.current').get_attribute("data-workflow-node") == "human_gate"
+            for width in (1920, 1440, 768):
+                driver.set_window_size(width, 1080)
+                assert driver.execute_script("return document.documentElement.scrollWidth <= innerWidth")
+                assert driver.find_element(By.CSS_SELECTOR, ".wf-timeline").is_displayed()
+            driver.set_window_size(1440, 1000)
+            checks["workflow_inspection_trace_and_responsive_layout"] = True
             driver.find_element(By.ID, "tab-1").click()
             driver.find_element(By.ID, "fit").click(); time.sleep(.1)
             assert driver.execute_script("return getComputedStyle(document.querySelector('.av-root')).height") == "866px"

@@ -56,11 +56,15 @@ def test_media_dimensions_and_animation_receipt():
         assert image.size == (1440, 1000)
     with Image.open(media / "public_monitor.gif") as image:
         assert image.size == (1600, 1239) and image.n_frames == 104 and image.info.get("loop") == 0
+    with Image.open(media / "public_monitor_usage_cost.png") as image:
+        assert image.size == (1920, 1080)
+    with Image.open(media / "public_monitor_workflow_trace.png") as image:
+        assert image.size == (1920, 1080)
 
 
-def test_four_skills_have_valid_frontmatter_and_resolved_links():
+def test_six_skills_have_valid_frontmatter_and_resolved_links():
     skills = sorted((ROOT / "skills").glob("*/SKILL.md"))
-    assert len(skills) == 4
+    assert len(skills) == 6
     for skill in skills:
         text = skill.read_text(encoding="utf-8")
         assert text.startswith("---\nname: " + skill.parent.name + "\n")

@@ -256,11 +256,19 @@ class PublicSnapshot:
     workstreams: tuple[Workstream, ...]
     events: tuple[ActivityEvent, ...]
     host: HostMetrics
+    model_usage: dict[str, Any] | None = None
+    workflow_graph: dict[str, Any] | None = None
 
     @classmethod
     def from_dict(cls, raw: Any) -> "PublicSnapshot":
-        row = exact_keys(raw, {"schema_version", "snapshot_kind", "generated_at", "participants", "workstreams", "events", "host"}, "snapshot")
-        if type(row["schema_version"]) is not int or row["schema_version"] != 1 or row["snapshot_kind"] not in {"recorded_demo", "local_observation"}:
+        if not isinstance(raw, dict):
+            raise SchemaError("invalid snapshot schema")
+        version = raw.get("schema_version")
+        expected = {"schema_version", "snapshot_kind", "generated_at", "participants", "workstreams", "events", "host"}
+        if version == 2:
+            expected |= {key for key in ("model_usage", "workflow_graph") if key in raw}
+        row = exact_keys(raw, expected, "snapshot")
+        if type(version) is not int or version not in {1, 2} or row["snapshot_kind"] not in {"recorded_demo", "local_observation"}:
             raise SchemaError("unsupported snapshot version or kind")
         if not all(isinstance(row[key], list) for key in ("participants", "workstreams", "events")):
             raise SchemaError("invalid snapshot collections")
@@ -286,4 +294,12 @@ class PublicSnapshot:
         timestamp = optional_timestamp(row["generated_at"], "snapshot timestamp")
         if timestamp is None:
             raise SchemaError("snapshot requires a timestamp")
-        return cls(1, row["snapshot_kind"], timestamp, participants, workstreams, events, HostMetrics.from_dict(row["host"]))
+        model_usage = row.get("model_usage")
+        workflow_graph = row.get("workflow_graph")
+        if model_usage is not None:
+            from .model_usage import validate_usage_snapshot
+            model_usage = validate_usage_snapshot(model_usage, known_people)
+        if workflow_graph is not None:
+            from .workflow import validate_workflow_snapshot
+            workflow_graph = validate_workflow_snapshot(workflow_graph)
+        return cls(version, row["snapshot_kind"], timestamp, participants, workstreams, events, HostMetrics.from_dict(row["host"]), model_usage, workflow_graph)
